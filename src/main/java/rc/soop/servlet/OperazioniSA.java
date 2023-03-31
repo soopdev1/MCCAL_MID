@@ -53,6 +53,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
+import rc.soop.domain.Ateco;
+import rc.soop.domain.Ruolo;
 
 /**
  *
@@ -228,6 +230,23 @@ public class OperazioniSA extends HttpServlet {
                 a.setEmail(request.getParameter("email"));
                 a.setSesso(Integer.parseInt(request.getParameter("codicefiscale").substring(9, 11)) > 40 ? "F" : "M");
                 a.setData_up(d_today);
+
+                //31/03/2023 - MODIFICA SU IMPRESA ESISTENTE
+                if (request.getParameter("impresaok") != null) { //SET VALORI
+                    a.setImpresaesistente(true);
+                    a.setRuoloimpresa(e.getEm().find(Ruolo.class, Long.valueOf(request.getParameter("ruoloimpresa"))));
+                    a.setRagionesocialeimpresa(new String(request.getParameter("ragionesocialeimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
+                    a.setPivaimpresa(new String(request.getParameter("partitaivaimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
+                    a.setAtecoimpresa(e.getEm().find(Ateco.class, request.getParameter("atecoimpresa")));
+                    a.setSedeimpresa(new String(request.getParameter("sedelegaleimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
+                } else { //TUTTO NULL
+                    a.setImpresaesistente(false);
+                    a.setRuoloimpresa(null);
+                    a.setRagionesocialeimpresa(null);
+                    a.setPivaimpresa(null);
+                    a.setAtecoimpresa(null);
+                    a.setSedeimpresa(null);
+                }
 
                 e.begin();
                 e.persist(a);
@@ -489,7 +508,7 @@ public class OperazioniSA extends HttpServlet {
             p.setStato(e.getEm().find(StatiPrg.class, "S1"));
             p.setControllable(1);
             p.setData_up(new Date());
-            
+
             boolean misto = false;
             try {
                 if (request.getParameter("misto").equalsIgnoreCase("SI")) {
@@ -560,10 +579,10 @@ public class OperazioniSA extends HttpServlet {
             e.merge(p);
             e.persist(new Storico_Prg("Creato", new Date(), p, p.getStato()));//storico progetto
             e.commit();
-            
+
             //INVIO MAIL
             SendMailJet.notifica_Controllo_MC(e, p);
-            
+
             resp.addProperty("result", true);
         } catch (PersistenceException | ParseException ex) {
             e.rollBack();
@@ -916,12 +935,10 @@ public class OperazioniSA extends HttpServlet {
                 }
                 e.merge(p);
                 e.commit();
-                
-                
+
                 //INVIO MAIL
                 SendMailJet.notifica_Controllo_MC(e, p);
-                
-                
+
                 resp.addProperty("result", true);
             } else {
                 resp.addProperty("result", false);
@@ -1372,7 +1389,7 @@ public class OperazioniSA extends HttpServlet {
     }
 
     protected void uploadRegistrioAula(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
 //        dsadsdsa
 //        
         Entity e = new Entity();
@@ -1545,7 +1562,7 @@ public class OperazioniSA extends HttpServlet {
             e.commit();
             resp.addProperty("result", true);
         } catch (Exception ex) {
-            e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), 
+            e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()),
                     "OperazioniSA modifyRegistrioAula: " + estraiEccezione(ex));
             resp.addProperty("result", false);
             resp.addProperty("message", "Errore: non &egrave; stato possibile modificare il registro.");

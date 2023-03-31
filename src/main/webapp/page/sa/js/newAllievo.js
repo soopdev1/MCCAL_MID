@@ -115,6 +115,45 @@ $('#provinciadom').on('change', function (e) {
     }
 });
 
+function impresaesistente() {
+    if ($('#impresaok').is(":checked") === false) {
+        $('.classimpok').css("display", "none");
+
+        $("#ruoloimpresa").attr("disabled", true);
+        $("#ruoloimpresa_div").removeClass("is-invalid is-invalid-select");
+
+        $("#ragionesocialeimpresa").attr("disabled", true);
+        $("#ragionesocialeimpresa").attr("placeholder", "Ragione Sociale - Denominazione");
+        $("#ragionesocialeimpresa").removeClass("is-invalid");
+
+        $("#partitaivaimpresa").attr("disabled", true);
+        $("#partitaivaimpresa").attr("placeholder", "Partita IVA");
+        $("#partitaivaimpresa").removeClass("is-invalid");
+
+        $("#atecoimpresa").attr("disabled", true);
+        $("#atecoimpresa_div").removeClass("is-invalid is-invalid-select");
+
+        $("#sedelegaleimpresa").attr("disabled", true);
+        $("#sedelegaleimpresa").attr("placeholder", "Sede Legale");
+        $("#sedelegaleimpresa").removeClass("is-invalid");
+
+    } else {
+        $('.classimpok').css("display", "");
+        $("#ruoloimpresa").removeAttr("disabled");
+
+        $("#ragionesocialeimpresa").removeAttr("disabled");
+        $("#ragionesocialeimpresa").removeAttr("placeholder");
+
+        $("#partitaivaimpresa").removeAttr("disabled");
+        $("#partitaivaimpresa").removeAttr("placeholder");
+
+        $("#atecoimpresa").removeAttr("disabled");
+
+        $("#sedelegaleimpresa").removeAttr("disabled");
+        $("#sedelegaleimpresa").removeAttr("placeholder");
+    }
+}
+
 function domicilio() {
     if ($('#checkind').is(":checked") === false) {
         $('#msgdom').css("display", "none");
@@ -173,6 +212,7 @@ function setCittadinanza() {
 }
 
 function ctrlForm() {
+
     var err = false;
     if (!$('#checkind').is(":checked")) {
         $('#indirizzodom').addClass("obbligatory");
@@ -188,6 +228,22 @@ function ctrlForm() {
         $('#comunedom').removeClass("obbligatory");
         $('#regionedom').removeClass("obbligatory");
         $('#provinciadom').removeClass("obbligatory");
+    }
+
+    if ($('#impresaok').is(":checked")) {
+
+        $('#ruoloimpresa').addClass("obbligatory");
+        $('#ragionesocialeimpresa').addClass("obbligatory");
+        $('#partitaivaimpresa').addClass("obbligatory");
+        $('#atecoimpresa').addClass("obbligatory");
+        $('#sedelegaleimpresa').addClass("obbligatory");
+
+    } else {
+        $('#ruoloimpresa').removeClass("obbligatory");
+        $('#ragionesocialeimpresa').removeClass("obbligatory");
+        $('#partitaivaimpresa').removeClass("obbligatory");
+        $('#atecoimpresa').removeClass("obbligatory");
+        $('#sedelegaleimpresa').removeClass("obbligatory");
     }
 
     err = checkObblFields() ? true : err;
@@ -217,7 +273,7 @@ $('#submit_change').on('click', function () {
                     "title": 'Errore',
                     "text": "Riprovare, se l'errore persiste contattare il servizio clienti",
                     "type": "error",
-                    cancelButtonClass: "btn btn-io-n",
+                    cancelButtonClass: "btn btn-io-n"
                 });
             },
             success: function (resp) {
@@ -226,13 +282,6 @@ $('#submit_change').on('click', function () {
                 if (json.result) {
                     resetInput();
                     swalSuccessReload("Allievo aggiunto!", "Operazione effettuata con successo.");
-//                                swal.fire({
-//                                    "title": '<h2 class="kt-font-io"><b>Allievo aggiunto!</b></h2><br>',
-//                                    "html": "<h4>Operazione effettuata con successo.</h4>",
-//                                    "type": "success",
-//                                    "width": '45%',
-//                                    "confirmButtonClass": "btn btn-io",
-//                                });
                 } else {
                     swal.fire({
                         "title": '<h2 class="kt-font-io-n"><b>Errore!</b></h2><br>',

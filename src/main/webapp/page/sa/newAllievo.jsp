@@ -3,6 +3,8 @@
     Created on : 18-set-2019, 12.31.26
     Author     : rcosco
 --%>
+<%@page import="rc.soop.domain.Ruolo"%>
+<%@page import="rc.soop.domain.Ateco"%>
 <%@page import="rc.soop.domain.Condizione_Lavorativa"%>
 <%@page import="rc.soop.domain.StatiPrg"%>
 <%@page import="rc.soop.domain.TipoDoc_Allievi"%>
@@ -32,6 +34,9 @@
             List<Item> regioni = e.listaRegioni();
             List<TitoliStudio> ts = e.listaTitoliStudio();
             List<CPI> cpi = e.listaCPI();
+            List<Ateco> ateco = e.findAll(Ateco.class);
+            List<Ruolo> ruoliaz = e.findAll(Ruolo.class);
+
             List<Condizione_Mercato> condizione = e.findAll(Condizione_Mercato.class);
             List<Condizione_Lavorativa> condlavprec = e.findAll(Condizione_Lavorativa.class);
             List<TipoDoc_Allievi> tipo_doc = e.getTipoDocAllievi(e.getEm().find(StatiPrg.class, "S"));
@@ -149,7 +154,7 @@
                                                                             <select class="form-control kt-select2-general obbligatory" id="stato" name="stato"  style="width: 100%">
                                                                                 <option value="-">Seleziona Stato</option>
                                                                                 <%for (Comuni c : cittadinanza) {%>
-                                                                                    <option value="<%=c.getIstat()%>" data-cf="<%=c.getCodicicatastali_altri()%>"><%=c.getNome()%></option>
+                                                                                <option value="<%=c.getIstat()%>" data-cf="<%=c.getCodicicatastali_altri()%>"><%=c.getNome()%></option>
                                                                                 <%}%>
                                                                             </select>
                                                                         </div>
@@ -189,7 +194,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-row" id="msgrow" style="display:block">
-                                                                        <label id="msg_cf"></label>
+                                                                    <label id="msg_cf"></label>
                                                                 </div>
                                                                 <div class="form-row">
                                                                     <div class="form-group col-xl-3 col-lg-6">
@@ -321,6 +326,69 @@
                                                                     </div>
                                                                 </div>
                                                                 <br>
+                                                                <h5>Tipologia di Impresa</h5> 
+                                                                <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
+                                                                <div class="form-row">
+                                                                    <div class="form-group col-lg-12">
+                                                                        <label>Impresa Esistente </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                        <div class="form-group" style="margin-bottom: 0rem;">
+                                                                            <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
+                                                                                <label>
+                                                                                    <input type="checkbox" name="impresaok" id="impresaok" onchange="return impresaesistente();" checked />
+                                                                                    <span></span>
+                                                                                </label>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-xl-4 col-lg-6">
+                                                                        <label>Ruolo svolto dal Soggetto (in qualità di) </label><label class="classimpok kt-font-danger kt-font-boldest">*</label>
+                                                                        <div class="dropdown bootstrap-select form-control kt-" 
+                                                                             id="ruoloimpresa_div" style="padding: 0;">
+                                                                            <select class="form-control kt-select2-general obbligatory" 
+                                                                                    id="ruoloimpresa" name="ruoloimpresa"  style="width: 100%">
+                                                                                <option value="-">Seleziona ruolo</option>
+                                                                                <%for (Ruolo t : ruoliaz) {%>
+                                                                                <option value="<%=t.getId()%>"><%=t.getDescrizione()%></option>
+                                                                                <%}%>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-xl-4 col-lg-6">
+                                                                        <label>Ragione Sociale - Denominazione </label><label class="classimpok kt-font-danger kt-font-boldest">*</label>
+                                                                        <div class="dropdown bootstrap-select form-control kt-" 
+                                                                             id="ragionesocialeimpresa_div" style="padding: 0;">
+                                                                            <input type="text" class="form-control" id="ragionesocialeimpresa" name="ragionesocialeimpresa" />                                                                    
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-xl-4 col-lg-6">
+                                                                        <label>Partita IVA </label><label class="classimpok kt-font-danger kt-font-boldest">*</label>
+                                                                        <div class="dropdown bootstrap-select form-control kt-" 
+                                                                             id="partitaivaimpresa_div" style="padding: 0;">
+                                                                            <input type="text" class="form-control" id="partitaivaimpresa" name="partitaivaimpresa" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-xl-4 col-lg-6">
+                                                                        <label>Codice ATECO </label><label class="classimpok kt-font-danger kt-font-boldest">*</label>
+                                                                        <div class="dropdown bootstrap-select form-control kt-" 
+                                                                             id=atecoimpresa_div" style="padding: 0;">
+                                                                            <select class="form-control kt-select2-general obbligatory" 
+                                                                                    id="atecoimpresa" name="atecoimpresa"  style="width: 100%">
+                                                                                <option value="-">Seleziona codice ATECO impresa</option>
+                                                                                <%for (Ateco t : ateco) {%>
+                                                                                <option value="<%=t.getCodice()%>"><%=t.getCodice()%> - <%=t.getDescrizione()%></option>
+                                                                                <%}%>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-xl-8 col-lg-6">
+                                                                        <label>Sede legale (Indirizzo Completo) </label><label class="classimpok kt-font-danger kt-font-boldest">*</label>
+                                                                        <div class="dropdown bootstrap-select form-control kt-" 
+                                                                             id="sedelegaleimpresa_div" style="padding: 0;">
+                                                                            <input type="text" class="form-control" id="sedelegaleimpresa" name="sedelegaleimpresa" />
+                                                                        </div>                                                                    
+                                                                    </div>    
+                                                                </div>    
+                                                                <br>
                                                                 <h5>Documentazione</h5> 
                                                                 <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
                                                                 <div class="form-row">
@@ -385,6 +453,7 @@
                                                                         <input type="text" class="form-control obbligatory" name="datacpi" id="datacpi" autocomplete="off" readonly/>
                                                                     </div>
                                                                 </div>
+                                                                <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
                                                                 <div class="form-group row">
                                                                     <%for (TipoDoc_Allievi t : tipo_doc) {%>
                                                                     <div class="form-group col-xl-4 col-lg-6">

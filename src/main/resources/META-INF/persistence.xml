@@ -40,6 +40,9 @@
     <class>rc.soop.domain.Condizione_Mercato</class>
     <class>rc.soop.domain.Condizione_Lavorativa</class>
     <class>rc.soop.domain.SediFormazione</class>
+    <!--2023-->
+    <class>rc.soop.domain.Ateco</class>
+    <class>rc.soop.domain.Ruolo</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.logging.level" value="SEVERE"/>

@@ -191,10 +191,10 @@
                                                                 <div class="kt-wizard-v1__form" style="color: #6c7293; min-height: 40vh">
                                                                     <div class="form-group row">
                                                                         <div class="col-lg-12">
-                                                                            <label>Nome</label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                            <label>Tipo</label><label class="kt-font-danger kt-font-boldest">*</label>
                                                                             <div class="dropdown bootstrap-select form-control kt- paddig_0" id="nome_pf_div">
                                                                                 <select class="form-control kt-select2-general obbligatory" id="nome_pf" name="nome_pf">
-                                                                                    <option value="-">Seleziona Nome</option>
+                                                                                    <option value="-">Seleziona Tipo Corso</option>
                                                                                     <%for (NomiProgetto s : nomi) {%>
                                                                                     <option value="<%=s.getId()%>"><%=s.getDescrizione()%></option>
                                                                                     <%}%>
@@ -206,16 +206,8 @@
                                                                         <label>Descrizione</label>
                                                                         <textarea class="form-control" id="descrizione_pf" name="descrizione_pf" placeholder="Descrizione Progetto Formativo" rows="5"></textarea>
                                                                     </div>
-                                                                    <div class="form-group">
-                                                                        <label>Progetto Formativo Misto</label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <div class="dropdown bootstrap-select form-control kt- paddig_0" id="misto_div">
-                                                                            <select class="form-control kt-select2-general obbligatory" id="misto" name="misto">
-                                                                                <option value="NO">NO</option>
-                                                                                <option value="SI">SI</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
 
+                                                                    <input type="hidden" name="misto" value="NO" />
                                                                     <div class="form-group row">
                                                                         <div class="col-lg-12">
                                                                             <label>Date Inizio - Fine </label><label class="kt-font-danger kt-font-boldest">*</label>
@@ -314,9 +306,6 @@
                                                                             </div>
                                                                             <div class="row">
                                                                                 <h5>Descrizione:&nbsp;</h5><label id="label_descrizione" style="color:#000;"></label>
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                <h5>Progetto Formativo Misto:&nbsp;</h5><label id="label_misto" style="color:#000;"></label>
                                                                             </div>
                                                                             <div class="row">
                                                                                 <h5>Date inizio e fine:&nbsp;</h5><label id="label_date" style="color:#000;"></label>
@@ -437,9 +426,6 @@
             });
             $("#descrizione_pf").change(function (e) {
                 $("#label_descrizione").html("<b>" + $(this).val() + "</b>");
-            });
-            $("#misto").change(function (e) {
-                $("#label_misto").html("<b>" + $(this).val() + "</b>");
             });
             $("#kt_daterange").change(function (e) {
                 $("#label_date").html("<b>" + $(this).val() + "</b>");

@@ -161,6 +161,26 @@ public class Allievi implements Serializable {
     
     
     
+    @Column(name = "impresa_esistente")
+    private boolean impresaesistente;
+    
+    @ManyToOne
+    @JoinColumn(name = "impresa_ruolo")
+    private Ruolo ruoloimpresa;
+    
+    @Column(name = "impresa_ragsoc")
+    private String ragionesocialeimpresa;
+    
+    @Column(name = "impresa_piva")
+    private String pivaimpresa;
+    
+    @ManyToOne
+    @JoinColumn(name = "impresa_ateco")
+    private Ateco atecoimpresa;
+    
+    @Column(name = "impresa_sede")
+    private String sedeimpresa;
+    
     
     
     public Allievi() {
@@ -211,6 +231,56 @@ public class Allievi implements Serializable {
             this.documenti = new ArrayList<>();
         }
     }
+
+    public boolean isImpresaesistente() {
+        return impresaesistente;
+    }
+
+    public void setImpresaesistente(boolean impresaesistente) {
+        this.impresaesistente = impresaesistente;
+    }
+
+    public Ruolo getRuoloimpresa() {
+        return ruoloimpresa;
+    }
+
+    public void setRuoloimpresa(Ruolo ruoloimpresa) {
+        this.ruoloimpresa = ruoloimpresa;
+    }
+
+    public String getRagionesocialeimpresa() {
+        return ragionesocialeimpresa;
+    }
+
+    public void setRagionesocialeimpresa(String ragionesocialeimpresa) {
+        this.ragionesocialeimpresa = ragionesocialeimpresa;
+    }
+
+    public String getPivaimpresa() {
+        return pivaimpresa;
+    }
+
+    public void setPivaimpresa(String pivaimpresa) {
+        this.pivaimpresa = pivaimpresa;
+    }
+
+    public Ateco getAtecoimpresa() {
+        return atecoimpresa;
+    }
+
+    public void setAtecoimpresa(Ateco atecoimpresa) {
+        this.atecoimpresa = atecoimpresa;
+    }
+
+    public String getSedeimpresa() {
+        return sedeimpresa;
+    }
+
+    public void setSedeimpresa(String sedeimpresa) {
+        this.sedeimpresa = sedeimpresa;
+    }
+    
+    
 
     public String getNote() {
         return note;
