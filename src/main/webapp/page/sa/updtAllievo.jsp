@@ -1,4 +1,6 @@
 
+<%@page import="rc.soop.domain.Ruolo"%>
+<%@page import="rc.soop.domain.Ateco"%>
 <%@page import="rc.soop.util.Utility"%>
 <%@page import="rc.soop.domain.Condizione_Lavorativa"%>
 <%@page import="rc.soop.domain.Comuni"%>
@@ -33,6 +35,10 @@
             List<CPI> cpi = e.listaCPI();
             List<Condizione_Mercato> condizione = e.findAll(Condizione_Mercato.class);
             List<Condizione_Lavorativa> condlavprec = e.findAll(Condizione_Lavorativa.class);
+
+            List<Ateco> ateco = e.findAll(Ateco.class);
+            List<Ruolo> ruoliaz = e.findAll(Ruolo.class);
+
             e.close();
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 %>
@@ -335,6 +341,85 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    <br>
+                                                                    <h5>Tipologia di Impresa</h5> 
+                                                                    <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-lg-12">
+                                                                            <label>Impresa Esistente </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                            <div class="form-group" style="margin-bottom: 0rem;">
+                                                                                <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
+                                                                                    <label>
+                                                                                        <input type="checkbox" name="impresaok" id="impresaok" onchange="return impresaesistente();" checked />
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group col-xl-4 col-lg-6">
+                                                                            <label>Ruolo svolto dal Soggetto (in qualità di) </label><label class="classimpok kt-font-danger kt-font-boldest">*</label>
+                                                                            <div class="dropdown bootstrap-select form-control kt-" 
+                                                                                 id="ruoloimpresa_div" style="padding: 0;">
+                                                                                <select class="form-control kt-select2-general obbligatory" 
+                                                                                        id="ruoloimpresa" name="ruoloimpresa"  style="width: 100%">
+                                                                                    <option value="-">Seleziona ruolo</option>
+                                                                                    <%for (Ruolo t : ruoliaz) {
+                                                                                            String se1 = "";
+                                                                                            if (t.equals(a.getRuoloimpresa())) {
+                                                                                                se1 = "selected";
+                                                                                            }
+                                                                                    %>
+                                                                                    <option <%=se1%> value="<%=t.getId()%>"><%=t.getDescrizione()%></option>
+                                                                                    <%}%>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group col-xl-4 col-lg-6">
+                                                                            <label>Ragione Sociale - Denominazione </label><label class="classimpok kt-font-danger kt-font-boldest">*</label>
+                                                                            <div class="dropdown bootstrap-select form-control kt-" 
+                                                                                 id="ragionesocialeimpresa_div" style="padding: 0;">
+                                                                                <input type="text" class="form-control" id="ragionesocialeimpresa" name="ragionesocialeimpresa"
+                                                                                       value="<%=(a.isImpresaesistente()) ? a.getRagionesocialeimpresa() : ""%>" 
+                                                                                       />                                                                    
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group col-xl-4 col-lg-6">
+                                                                            <label>Partita IVA </label><label class="classimpok kt-font-danger kt-font-boldest">*</label>
+                                                                            <div class="dropdown bootstrap-select form-control kt-" 
+                                                                                 id="partitaivaimpresa_div" style="padding: 0;">
+                                                                                <input type="text" class="form-control" id="partitaivaimpresa" name="partitaivaimpresa" 
+                                                                                       value="<%=(a.isImpresaesistente()) ? a.getPivaimpresa() : ""%>"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group col-xl-4 col-lg-6">
+                                                                            <label>Codice ATECO </label><label class="classimpok kt-font-danger kt-font-boldest">*</label>
+                                                                            <div class="dropdown bootstrap-select form-control kt-" 
+                                                                                 id=atecoimpresa_div" style="padding: 0;">
+                                                                                <select class="form-control kt-select2-general obbligatory" 
+                                                                                        id="atecoimpresa" name="atecoimpresa"  style="width: 100%">
+                                                                                    <option value="-">Seleziona codice ATECO impresa</option>
+                                                                                    <%for (Ateco t : ateco) {
+
+                                                                                            String se1 = "";
+                                                                                            if (t.equals(a.getAtecoimpresa())) {
+                                                                                                se1 = "selected";
+                                                                                            }
+                                                                                    %>
+                                                                                    <option <%=se1%> value="<%=t.getCodice()%>"><%=t.getCodice()%> - <%=t.getDescrizione()%></option>
+                                                                                    <%}%>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group col-xl-8 col-lg-6">
+                                                                            <label>Sede legale (Indirizzo Completo) </label><label class="classimpok kt-font-danger kt-font-boldest">*</label>
+                                                                            <div class="dropdown bootstrap-select form-control kt-" 
+                                                                                 id="sedelegaleimpresa_div" style="padding: 0;">
+                                                                                <input type="text" class="form-control" id="sedelegaleimpresa" 
+                                                                                       name="sedelegaleimpresa" value="<%=(a.isImpresaesistente()) ? a.getSedeimpresa() : ""%>"/>
+                                                                            </div>                                                                    
+                                                                        </div>    
+                                                                    </div>    
+                                                                    <br>
                                                                     <h5>Documentazione</h5>
                                                                     <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
                                                                     <div class="form-row">
@@ -494,32 +579,32 @@
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script type="text/javascript">
-                                                                                var KTAppOptions = {
-                                                                                    "colors": {
-                                                                                        "state": {
-                                                                                            "brand": "#5d78ff",
-                                                                                            "dark": "#282a3c",
-                                                                                            "light": "#ffffff",
-                                                                                            "primary": "#5867dd",
-                                                                                            "success": "#34bfa3",
-                                                                                            "info": "#36a3f7",
-                                                                                            "warning": "#ffb822"
-                                                                                        },
-                                                                                        "base": {
-                                                                                            "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                                                            "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                                                        }
-                                                                                    }
-                                                                                };
+                                                                                            var KTAppOptions = {
+                                                                                                "colors": {
+                                                                                                    "state": {
+                                                                                                        "brand": "#5d78ff",
+                                                                                                        "dark": "#282a3c",
+                                                                                                        "light": "#ffffff",
+                                                                                                        "primary": "#5867dd",
+                                                                                                        "success": "#34bfa3",
+                                                                                                        "info": "#36a3f7",
+                                                                                                        "warning": "#ffb822"
+                                                                                                    },
+                                                                                                    "base": {
+                                                                                                        "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                                                                                        "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                                                                                    }
+                                                                                                }
+                                                                                            };
         </script>
 
         <script>
             jQuery(document).ready(function () {
-                if ($('#cittadinanza').val() == '-') {
+                if ($('#cittadinanza').val() === '-') {
                     $('#cittadinanza').val('000');
                     $('#cittadinanza').trigger('change');
                 }
-                if ($('#stato').val() != '-') {
+                if ($('#stato').val() !== '-') {
                     setCittadinanza();
                 }
                 $('#kt_widget5_tab1_content').addClass("active");
@@ -538,6 +623,13 @@
                 selectComuneN("<%=a.getComune_nascita().getNome_provincia()%>");
                 selectComuneR("<%=a.getComune_residenza().getNome_provincia()%>");
                 selectComuneD("<%=a.getComune_domicilio().getNome_provincia()%>");
+
+            <%if (a.isImpresaesistente()) {%>
+                $('#impresaok').prop('checked', true);
+            <%} else {%>
+                $('#impresaok').prop('checked', false);
+            <%}%>
+                impresaesistente();
             });
 
             $('#scadenzadoc').on("change", function () {
@@ -789,6 +881,45 @@
                 }
             }
 
+            function impresaesistente() {
+                if ($('#impresaok').is(":checked") === false) {
+                    $('.classimpok').css("display", "none");
+
+                    $("#ruoloimpresa").attr("disabled", true);
+                    $("#ruoloimpresa_div").removeClass("is-invalid is-invalid-select");
+
+                    $("#ragionesocialeimpresa").attr("disabled", true);
+                    $("#ragionesocialeimpresa").attr("placeholder", "Ragione Sociale - Denominazione");
+                    $("#ragionesocialeimpresa").removeClass("is-invalid");
+
+                    $("#partitaivaimpresa").attr("disabled", true);
+                    $("#partitaivaimpresa").attr("placeholder", "Partita IVA");
+                    $("#partitaivaimpresa").removeClass("is-invalid");
+
+                    $("#atecoimpresa").attr("disabled", true);
+                    $("#atecoimpresa_div").removeClass("is-invalid is-invalid-select");
+
+                    $("#sedelegaleimpresa").attr("disabled", true);
+                    $("#sedelegaleimpresa").attr("placeholder", "Sede Legale");
+                    $("#sedelegaleimpresa").removeClass("is-invalid");
+
+                } else {
+                    $('.classimpok').css("display", "");
+                    $("#ruoloimpresa").removeAttr("disabled");
+
+                    $("#ragionesocialeimpresa").removeAttr("disabled");
+                    $("#ragionesocialeimpresa").removeAttr("placeholder");
+
+                    $("#partitaivaimpresa").removeAttr("disabled");
+                    $("#partitaivaimpresa").removeAttr("placeholder");
+
+                    $("#atecoimpresa").removeAttr("disabled");
+
+                    $("#sedelegaleimpresa").removeAttr("disabled");
+                    $("#sedelegaleimpresa").removeAttr("placeholder");
+                }
+            }
+
             function domicilio() {
                 if ($('#checkind').is(":checked") === false) {
                     $('#msgdom').css("display", "none");
@@ -839,9 +970,23 @@
                     $('#provinciadom').removeClass("obbligatory");
                 }
 
+                if ($('#impresaok').is(":checked")) {
+                    $('#ruoloimpresa').addClass("obbligatory");
+                    $('#ragionesocialeimpresa').addClass("obbligatory");
+                    $('#partitaivaimpresa').addClass("obbligatory");
+                    $('#atecoimpresa').addClass("obbligatory");
+                    $('#sedelegaleimpresa').addClass("obbligatory");
+                } else {
+                    $('#ruoloimpresa').removeClass("obbligatory");
+                    $('#ragionesocialeimpresa').removeClass("obbligatory");
+                    $('#partitaivaimpresa').removeClass("obbligatory");
+                    $('#atecoimpresa').removeClass("obbligatory");
+                    $('#sedelegaleimpresa').removeClass("obbligatory");
+                }
+
                 err = checkObblFields() ? true : err;
                 if (checkCF($('#codicefiscale'))) {
-                    if ($('#codicefiscale').val() != '<%=a.getCodicefiscale()%>') {
+                    if ($('#codicefiscale').val() !== '<%=a.getCodicefiscale()%>') {
                         err = CFPresent() ? true : err;
                     }
                     err = checkinfoCF() ? true : err;
@@ -849,7 +994,7 @@
                     err = true;
                 }
                 if (!checkEmail($('#email'))) {
-                    if ($('#email').val() != '<%=a.getEmail()%>') {
+                    if ($('#email').val() !== '<%=a.getEmail()%>') {
                         err = EmailPresente();
                     }
                 } else {
@@ -858,7 +1003,7 @@
                 err = !checkRequiredFile() ? true : err;
                 err = !checkFileExtAndDim(['pdf']) ? true : err;
                 return !err;
-                
+
             }
 
             $('a.submit_change').on('click', function () {
@@ -871,7 +1016,7 @@
                                 "title": 'Errore',
                                 "text": "Riprovare, se l'errore persiste contattare il servizio clienti",
                                 "type": "error",
-                                cancelButtonClass: "btn btn-io-n",
+                                cancelButtonClass: "btn btn-io-n"
                             });
                         },
                         success: function (resp) {
@@ -883,7 +1028,7 @@
                                     "html": "<h4>Operazione effettuata con successo.</h4>",
                                     "type": "success",
                                     "width": '45%',
-                                    "confirmButtonClass": "btn btn-io",
+                                    "confirmButtonClass": "btn btn-io"
                                 });
                             } else {
                                 swal.fire({
@@ -988,7 +1133,7 @@
                                     url: "<%=request.getContextPath()%>/OperazioniSA?type=getCodiceCatastaleComune&idcomune=" + $('#comunenascita').val(),
                                     success: function (resp) {
                                         $('#stato_div').removeClass("is-invalid-select").addClass("is-valid-select");
-                                        if (check_comune_CF(resp,cf.val().substring(11, 15).toUpperCase())) {
+                                        if (check_comune_CF(resp, cf.val().substring(11, 15).toUpperCase())) {
 //                                        if (resp != cf.val().substring(11, 15).toUpperCase()) {
                                             msg += err ? ", Comune di nascita" : "Comune di nascita";
                                             $('#comunenascita_div').removeClass("is-valid-select").addClass("is-invalid-select");

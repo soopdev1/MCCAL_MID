@@ -184,7 +184,7 @@ public class OperazioniSA extends HttpServlet {
                 Part p = request.getPart("docid");
                 String ext = p.getSubmittedFileName().substring(p.getSubmittedFileName().lastIndexOf("."));
                 String pathid = path + "docId_" + today + "_" + request.getParameter("codicefiscale") + ext;
-                p.write(pathid);
+                Utility.PartWrite(p, pathid);
 
                 Allievi a = new Allievi();
 
@@ -253,7 +253,7 @@ public class OperazioniSA extends HttpServlet {
                 for (TipoDoc_Allievi t : tipo_doc) {
                     p = request.getPart("doc_" + t.getId());
                     ext = p.getSubmittedFileName().substring(p.getSubmittedFileName().lastIndexOf("."));
-                    p.write(path + t.getDescrizione() + today + "_" + request.getParameter("codicefiscale") + ext);
+                    Utility.PartWrite(p, path + t.getDescrizione() + today + "_" + request.getParameter("codicefiscale") + ext);
                     documenti.add(new Documenti_Allievi(path + t.getDescrizione() + today + "_" + request.getParameter("codicefiscale") + ext, t, null, a));
                 }
                 a.setDocumenti(documenti);
@@ -266,6 +266,7 @@ public class OperazioniSA extends HttpServlet {
                 resp.addProperty("message", "Errore: non &egrave; stato possibile aggiungere l'allievo.<br>Il seguente codice fiscale gi&agrave; presente");
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             e.insertTracking(null, "newAllievo Errore: " + estraiEccezione(ex));
             resp.addProperty("result", false);
             resp.addProperty("message", "Errore: non &egrave; stato possibile aggiungere l'allievo.<br>Riprovare, se l'errore persiste contattare l'assistenza");
@@ -292,7 +293,7 @@ public class OperazioniSA extends HttpServlet {
                 String path = request.getParameter("cartaidpath");
                 if (p != null && p.getSubmittedFileName() != null && p.getSubmittedFileName().length() > 0) {
                     path = a.getDocid();
-                    p.write(path);
+                    Utility.PartWrite(p, path);
                 }
 
                 if (request.getParameter("stato").equals("000")) {
@@ -335,6 +336,22 @@ public class OperazioniSA extends HttpServlet {
                 a.setNeet(e.getEm().find(Condizione_Lavorativa.class, Integer.valueOf(request.getParameter("condizione_lavorativa"))).getDescrizione());
                 a.setEmail(request.getParameter("email"));
                 a.setSesso(Integer.parseInt(request.getParameter("codicefiscale").substring(9, 11)) > 40 ? "F" : "M");
+
+                if (request.getParameter("impresaok") != null) { //SET VALORI
+                    a.setImpresaesistente(true);
+                    a.setRuoloimpresa(e.getEm().find(Ruolo.class, Long.valueOf(request.getParameter("ruoloimpresa"))));
+                    a.setRagionesocialeimpresa(new String(request.getParameter("ragionesocialeimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
+                    a.setPivaimpresa(new String(request.getParameter("partitaivaimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
+                    a.setAtecoimpresa(e.getEm().find(Ateco.class, request.getParameter("atecoimpresa")));
+                    a.setSedeimpresa(new String(request.getParameter("sedelegaleimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
+                } else { //TUTTO NULL
+                    a.setImpresaesistente(false);
+                    a.setRuoloimpresa(null);
+                    a.setRagionesocialeimpresa(null);
+                    a.setPivaimpresa(null);
+                    a.setAtecoimpresa(null);
+                    a.setSedeimpresa(null);
+                }
 
                 e.merge(a);
                 e.flush();

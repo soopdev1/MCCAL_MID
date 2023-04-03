@@ -334,6 +334,18 @@ public class Entity {
                 .setParameter("soggetto", sa);
         return q.getResultList().isEmpty() ? new ArrayList() : (List<Allievi>) q.getResultList();
     }
+    
+    public List<Allievi> getAllieviSoggettoNoPrgNOIMPR(SoggettiAttuatori sa) {
+        TypedQuery<Allievi> q = em.createNamedQuery("a.bySoggettoAttuatoreNoProgettonoimpr", Allievi.class)
+                .setParameter("soggetto", sa);
+        return q.getResultList().isEmpty() ? new ArrayList() : (List<Allievi>) q.getResultList();
+    }
+    public List<Allievi> getAllieviSoggettoNoPrgSIIMPR(SoggettiAttuatori sa) {
+        TypedQuery<Allievi> q = em.createNamedQuery("a.bySoggettoAttuatoreNoProgettosiimpr", Allievi.class)
+                .setParameter("soggetto", sa);
+        return q.getResultList().isEmpty() ? new ArrayList() : (List<Allievi>) q.getResultList();
+    }
+    
 
     public List<Allievi> getAllieviSA(String nome, String cognome, String cf, String stato, CPI cpi, SoggettiAttuatori sa) {
         HashMap<String, Object> param = new HashMap<>();

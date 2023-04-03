@@ -231,13 +231,11 @@ function ctrlForm() {
     }
 
     if ($('#impresaok').is(":checked")) {
-
         $('#ruoloimpresa').addClass("obbligatory");
         $('#ragionesocialeimpresa').addClass("obbligatory");
         $('#partitaivaimpresa').addClass("obbligatory");
         $('#atecoimpresa').addClass("obbligatory");
         $('#sedelegaleimpresa').addClass("obbligatory");
-
     } else {
         $('#ruoloimpresa').removeClass("obbligatory");
         $('#ragionesocialeimpresa').removeClass("obbligatory");

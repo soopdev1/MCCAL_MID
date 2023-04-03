@@ -47,6 +47,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.RequestContext;
@@ -389,4 +390,17 @@ public class Utility {
     public static final String timestampSQL = "yyyy-MM-dd HH:mm:ss";
     public static final String timestampITA = "dd/MM/yyyy HH:mm:ss";
 
+    public static boolean PartWrite(Part part, String pathdest) {
+        try {
+            if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+                part.write("C:/" + pathdest);
+            } else {
+                part.write(pathdest);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

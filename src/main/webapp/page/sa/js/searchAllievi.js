@@ -55,8 +55,18 @@ var KTDatatablesDataSourceAjaxServer = function () {
                     className: 'text-center',
                     render: function (data, type, row) {
                         return row.comune_domicilio.nome + ' (' + row.comune_domicilio.provincia + '),<br>' + row.indirizzodomicilio + ' ' + row.civicodomicilio;
+                    }
+                },
+                {data: 'impresaesistente',
+                    className: 'text-center',
+                    type: 'date-it',
+                    render: function (data, type, row) {
+                        if(row.impresaesistente){
+                            return "SI - "+row.ragionesocialeimpresa;
+                        }else{
+                            return "NO";
+                        }
                     }},
-                {data: 'titoloStudio.descrizione', className: 'text-center'},
                 {data: 'iscrizionegg',
                     className: 'text-center',
                     type: 'date-it',

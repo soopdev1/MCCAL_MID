@@ -27,7 +27,9 @@
         } else {
             String src = session.getAttribute("src").toString();
             Entity e = new Entity();
-            List<Allievi> alunni = e.getAllieviSoggettoNoPrg(us.getSoggettoAttuatore());
+            List<Allievi> alunniSI = e.getAllieviSoggettoNoPrgSIIMPR(us.getSoggettoAttuatore());
+            List<Allievi> alunniNO = e.getAllieviSoggettoNoPrgNOIMPR(us.getSoggettoAttuatore());
+
             List<SediFormazione> sedi = e.findAll(SediFormazione.class);
             List<NomiProgetto> nomi = e.findAll(NomiProgetto.class);
             List<Docenti> docente = e.getActiveDocenti();
@@ -234,11 +236,21 @@
                                                                                 </select>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="form-group">
-                                                                            <label>Allievi</label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                        <div class="form-group" id="div_allievisi">
+                                                                            <label>Allievi (IMPRESE ESISTENTI) </label> <label class="kt-font-danger kt-font-boldest">*</label>
                                                                             <div class="select-div" id="allievi_div">
-                                                                                <select class="form-control kt-select2 obbligatory" id="allievi" name="allievi[]" multiple="multiple" style="width: 100%">
-                                                                                    <%for (Allievi a : alunni) {%>
+                                                                                <select class="form-control kt-select2 obbligatory" id="allievisi" name="allievi[]" multiple="multiple" style="width: 100%">
+                                                                                    <%for (Allievi a : alunniSI) {%>
+                                                                                    <option value="<%=a.getId()%>"><%=a.getCognome()%> <%=a.getNome()%> (<%=a.getCodicefiscale()%>)</option>
+                                                                                    <%}%>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group" id="div_allievino">
+                                                                            <label>Allievi (NUOVE IMPRESE)</label> <label class="kt-font-danger kt-font-boldest">*</label>
+                                                                            <div class="select-div" id="allievi_div">
+                                                                                <select class="form-control kt-select2 obbligatory" id="allievino" name="allievi[]" multiple="multiple" style="width: 100%">
+                                                                                    <%for (Allievi a : alunniNO) {%>
                                                                                     <option value="<%=a.getId()%>"><%=a.getCognome()%> <%=a.getNome()%> (<%=a.getCodicefiscale()%>)</option>
                                                                                     <%}%>
                                                                                 </select>
@@ -422,8 +434,16 @@
             <%}%>
 
             $("#nome_pf").change(function (e) {
-                $("#label_titolo").html("<b>" + $(this).val() + "</b>");
+                $("#label_titolo").html("<b>" + $("#" + this.id + " option[value='" + $(this).val() + "']").text() + "</b>");
+                if($(this).val() === '1'){
+                    $("#div_allievisi").css("display", "none");
+                    $("#div_allievino").css("display", "");
+                } else {
+                    $("#div_allievino").css("display", "none");
+                    $("#div_allievisi").css("display", "");
+                }
             });
+            
             $("#descrizione_pf").change(function (e) {
                 $("#label_descrizione").html("<b>" + $(this).val() + "</b>");
             });
@@ -433,10 +453,17 @@
             $("#sede").change(function (e) {
                 $("#label_aula").html("<b>" + $("#" + this.id + " option[value='" + $(this).val() + "']").text() + "</b>");
             });
-            $("#allievi").change(function (e) {
+            $("#allievisi").change(function (e) {
                 var allievi = "";
-                $.each($('#allievi').val(), function (i, a) {
-                    allievi = allievi + $("#allievi option[value='" + a + "']").text() + "; ";
+                $.each($('#allievisi').val(), function (i, a) {
+                    allievi = allievi + $("#allievisi option[value='" + a + "']").text() + "; ";
+                });
+                $("#label_alunni").html("<b>" + allievi + "</b>");
+            });
+            $("#allievino").change(function (e) {
+                var allievi = "";
+                $.each($('#allievino').val(), function (i, a) {
+                    allievi = allievi + $("#allievino option[value='" + a + "']").text() + "; ";
                 });
                 $("#label_alunni").html("<b>" + allievi + "</b>");
             });

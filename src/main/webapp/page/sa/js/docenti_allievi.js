@@ -240,16 +240,23 @@ function uploadCurriculum(id) {
 
 var canali = new Map();
 var allievi_old = [];
-$('#allievi').on("change", function () {
-    conoscenzeAllevi();
+
+$('#allievisi').on("change", function () {
+    conoscenzeAllevi('allievisi');
+});
+$('#allievino').on("change", function () {
+    conoscenzeAllevi('allievino');
 });
 
-$('#allievi').select2({//setta placeholder nella multiselect
-    placeholder: "Seleziona Allievi",
+$('#allievisi').select2({//setta placeholder nella multiselect
+    placeholder: "Seleziona Allievi"
+});
+$('#allievino').select2({//setta placeholder nella multiselect
+    placeholder: "Seleziona Allievi"
 });
 
-function conoscenzeAllevi() {
-    var allievi = $('#allievi').val();
+function conoscenzeAllevi(idsel) {
+    var allievi = $('#'+idsel).val();
     var input = "<div id='knowledge_@id' class='col-lg-12 col-md-12'>"
             + "<div class='input-group'>"
             + "<input class='form-control col-6' value='@nome' readonly>"
@@ -268,8 +275,8 @@ function conoscenzeAllevi() {
             if (!allievi_old.includes(a)) {
                 $('#knowlege_channel').append(
                         input.split("@id").join(a)
-                        .replace("@nome", $("#allievi option[value='" + a + "']").text())
-                        .replace("@canale", canali.get(a) == null ? "" : canali.get(a)));
+                        .replace("@nome", $("#"+idsel+" option[value='" + a + "']").text())
+                        .replace("@canale", canali.get(a) === null ? "" : canali.get(a)));
             }
         });
         allievi_old = allievi;
