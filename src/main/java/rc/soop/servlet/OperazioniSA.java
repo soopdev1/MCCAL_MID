@@ -447,7 +447,7 @@ public class OperazioniSA extends HttpServlet {
             String ext = p.getSubmittedFileName().substring(p.getSubmittedFileName().lastIndexOf("."));
             path += "Doc_id_" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "_" + d.getCodicefiscale() + ext;
 
-            p.write(path);
+            Utility.PartWrite(p, path);
             d.setDocId(path);
 
             e.commit();
@@ -483,7 +483,7 @@ public class OperazioniSA extends HttpServlet {
             String ext = p.getSubmittedFileName().substring(p.getSubmittedFileName().lastIndexOf("."));
             path += "Curriculum_" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "_" + d.getCodicefiscale() + ext;
 
-            p.write(path);
+            Utility.PartWrite(p, path);
             d.setCurriculum(path);
 
             e.commit();
@@ -558,7 +558,7 @@ public class OperazioniSA extends HttpServlet {
                 part = request.getPart("doc_" + t.getId());
                 if (part != null && part.getSubmittedFileName() != null && part.getSubmittedFileName().length() > 0) {
                     file_path = path + t.getDescrizione() + "_" + today + part.getSubmittedFileName().substring(part.getSubmittedFileName().lastIndexOf("."));
-                    part.write(file_path);
+                    Utility.PartWrite(part, file_path);
                     doc = new DocumentiPrg();
                     doc.setPath(file_path);
                     doc.setTipo(t);
@@ -686,7 +686,7 @@ public class OperazioniSA extends HttpServlet {
             //scrivo il file su disco
             if (p != null && p.getSubmittedFileName() != null && p.getSubmittedFileName().length() > 0) {
                 file_path = path + tipo.getDescrizione() + "_" + today + p.getSubmittedFileName().substring(p.getSubmittedFileName().lastIndexOf("."));
-                p.write(file_path);
+                Utility.PartWrite(p, file_path);
                 DocumentiPrg doc = new DocumentiPrg();
                 doc.setPath(file_path);
                 doc.setTipo(tipo);
@@ -929,19 +929,24 @@ public class OperazioniSA extends HttpServlet {
                 boolean to_fb = false;
                 if (p.getStato().getId().equals("FA")) {
                     p.setEnd_fa(today);//fine fa
-                    p.setStart_fb(today);//inizio fb
-                    to_fb = true;
-                    p.setStato(e.getEm().find(StatiPrg.class,
-                            "FB"));
-                    p.setControllable(0);
-                    e.persist(new Storico_Prg("Avviata Fase B", new Date(), p, p.getStato()));//storico progetto
-                    if (!checkFaseAllievi(p.getAllievi())) {
-                        p.setEnd_fb(today);//se fb non parte setta fine fb alla stessa data di FA
+                    if (p.getNome().getId().equals(2L)) { // IMPRESA ESISTENTE - PASSA A FINE FASE B
+                        p.setStart_fb(today);
+                        p.setEnd_fb(today);
+                        p.setControllable(1);
+                        e.persist(new Storico_Prg("CONCLUSIONE FASE A - INTERO PROGETTO", new Date(), p, p.getStato()));//storico progetto
+                    } else {  // NUOVA IMPRESA - TUTTO COME PRIMA
+                        p.setStart_fb(today);//inizio fb
+                        to_fb = true;
+                        p.setStato(e.getEm().find(StatiPrg.class,
+                                "FB"));
+                        p.setControllable(0);
+                        e.persist(new Storico_Prg("Avviata Fase B", new Date(), p, p.getStato()));//storico progetto
+                        if (!checkFaseAllievi(p.getAllievi())) {
+                            p.setEnd_fb(today);//se fb non parte setta fine fb alla stessa data di FA
+                        }
+                        //crea stanze fad
+                        Action.creastanze_faseB(Integer.parseInt(request.getParameter("id")));
                     }
-
-                    //crea stanze fad
-                    Action.creastanze_faseB(Integer.parseInt(request.getParameter("id")));
-
                 } else if (p.getStato().getId().equals("FB") && p.getEnd_fb() == null) {
                     p.setEnd_fb(today);//setta data fine fase FB solo se non precedentemente settata
                 }

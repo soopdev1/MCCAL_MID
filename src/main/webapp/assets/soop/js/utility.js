@@ -617,11 +617,11 @@ function swalConfirm(title, HTMLmessage, func) {
         showCancelButton: true,
         confirmButtonText: '&nbsp;<i class="la la-check"></i>',
         cancelButtonText: '&nbsp;<i class="la la-close"></i>',
-        cancelButtonClass: "btn btn-io-n",
-        confirmButtonClass: "btn btn-io",
         customClass: {
             popup: 'large-swal animated bounceInUp',
-        },
+            confirmButton: 'btn btn-io',
+            cancelButton: 'btn btn-io-n'
+        }
     }).then((result) => {
         if (result.value) {
             func();

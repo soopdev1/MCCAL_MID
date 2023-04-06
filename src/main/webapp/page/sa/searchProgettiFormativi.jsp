@@ -173,7 +173,7 @@
                                                     <tr>
                                                         <th class="text-uppercase text-center">Azioni</th>
                                                         <th class="text-uppercase text-center">ID</th>
-                                                        <th class="text-uppercase text-center">Descrizione</th>
+                                                        <th class="text-uppercase text-center">Tipo Progetto</th>
                                                         <th class="text-uppercase text-center">PF Misto</th>
                                                         <th class="text-uppercase text-center">Ore Fase_A</th>
                                                         <th class="text-uppercase text-center">Data Inizio</th>

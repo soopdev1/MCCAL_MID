@@ -33,7 +33,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
                 {defaultContent: ''},
                 {data: 'id',
                     className: 'text-center'},
-                {data: 'descrizione',
+                {data: 'nome.descrizione',
                     className: 'text-center'},
                 {data: 'misto',
                     className: 'text-center',

@@ -35,7 +35,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
                 {defaultContent: ''},
                 {data: 'id',
                     className: 'text-center'},
-                {data: 'descrizione',
+                {data: 'nome.descrizione',
                     className: 'text-center'},
                 {data: 'misto',
                     className: 'text-center',
@@ -102,7 +102,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
                                 option += '<a class="dropdown-item fancyBoxAntoRef" href="uploadDocumet.jsp?id=' + row.id + '" ><i class="fa fa-file-upload"></i> Modifica/Carica Doc.</a>';
                             }
                             if (row.controllable === 1) {
-                                option += '<a class="dropdown-item kt-font-success" href="javascript:void(0);" onclick="confirmNext(' + row.id + ',\'' + row.stato.id + '\')"> Manda avanti la pratica &nbsp;<i class="fa fa-angle-double-right kt-font-success" style="margin-top:-2px"></i></a>';
+                                option += '<a class="dropdown-item kt-font-success" href="javascript:void(0);" onclick="confirmNext(' + row.id + ',\'' + row.stato.id + '\',' + row.nome.id + ')"> Manda avanti la pratica &nbsp;<i class="fa fa-angle-double-right kt-font-success" style="margin-top:-2px"></i></a>';
                             }
                         }
                         if (row.fadroom !== null) {
@@ -464,12 +464,17 @@ function showRegistro(idregistro) {
     });
 }
 
-function confirmNext(id, stato) {
+function confirmNext(id, stato, tipoprog) {
     var msg = "Sicuro di voler inviare a controllo il Progetto Formativo?";
     if (stato === 'FA') {
-        msg += "<br><br><b class='kt-font-danger'>Stai per terminare la FASE A.<br>&Egrave; necessario selezionare tutti gli allievi che accederanno alla FASE B; in caso contrario, non potranno essere caricati i registri individuali per gli allievi."
-                + "<br><br>Inoltre, una volta terminata La FASE A, non potranno essere caricati altri registri relativi ad essa.</b>"
-                + "<br>";
+        if (tipoprog === 2) { // SOLO FASE A
+            msg += "<br><br><b class='kt-font-danger'>Stai per terminare la FASE A, che completa questo percorso formativo.<br>"
+                + "<br><br><b>Ti ricordiamo che non potranno essere effettuate modifiche fino ad avvenuto controllo da parte dell'ente Microcredito.</b>";    
+        } else {
+            msg += "<br><br><b class='kt-font-danger'>Stai per terminare la FASE A.<br>&Egrave; necessario selezionare tutti gli allievi che accederanno alla FASE B; in caso contrario, non potranno essere caricati i registri individuali per gli allievi."
+                    + "<br><br>Inoltre, una volta terminata La FASE A, non potranno essere caricati altri registri relativi ad essa.</b>"
+                    + "<br>";
+        }
     } else if (stato === 'FB') {
         msg += "<br><br><b class='kt-font-danger'>Stai per terminare la FASE B.<br>"
                 + "Inoltre, una volta terminata La FASE B, non potranno essere caricati altri registri individuali relativi ad essa.</b>"

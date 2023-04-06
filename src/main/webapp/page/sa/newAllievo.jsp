@@ -280,7 +280,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <h5>Domicilio <label class="kt-font-danger kt-font-boldest" style="display:none;" id="msgdom">Il domicilio corrisponde con la residenza</label></h5>
+                                                                <h5>Domicilio <label class="kt-font-info kt-font-boldest" style="display:none;" id="msgdom"> - Il domicilio corrisponde con la residenza</label></h5>
                                                                 <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
                                                                 <div class="form-row">
                                                                     <div class="form-group col-xl-4 col-lg-6">

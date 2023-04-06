@@ -36,8 +36,8 @@ import javax.persistence.Transient;
     @NamedQuery(name = "a.byCF", query = "SELECT a FROM Allievi a WHERE a.codicefiscale=:codicefiscale AND a.statopartecipazione.id = '01'"),
     @NamedQuery(name = "a.bySoggettoAttuatore", query = "SELECT a FROM Allievi a WHERE a.soggetto=:soggetto"),
     @NamedQuery(name = "a.bySoggettoAttuatoreNoProgetto", query = "SELECT a FROM Allievi a WHERE a.soggetto=:soggetto AND a.progetto=null"),
-    @NamedQuery(name = "a.bySoggettoAttuatoreNoProgettonoimpr", query = "SELECT a FROM Allievi a WHERE a.soggetto=:soggetto AND a.progetto=null AND a.impresaesistente=1"),
-    @NamedQuery(name = "a.bySoggettoAttuatoreNoProgettosiimpr", query = "SELECT a FROM Allievi a WHERE a.soggetto=:soggetto AND a.progetto=null AND a.impresaesistente=0"),
+    @NamedQuery(name = "a.bySoggettoAttuatoreNoProgettonoimpr", query = "SELECT a FROM Allievi a WHERE a.soggetto=:soggetto AND a.progetto=null AND a.impresaesistente=0"),
+    @NamedQuery(name = "a.bySoggettoAttuatoreNoProgettosiimpr", query = "SELECT a FROM Allievi a WHERE a.soggetto=:soggetto AND a.progetto=null AND a.impresaesistente=1"),
     @NamedQuery(name = "a.byProgetto", query = "SELECT a FROM Allievi a WHERE a.progetto=:progetto AND a.statopartecipazione.id='01'"),
     @NamedQuery(name = "a.byEmail", query = "SELECT a FROM Allievi a WHERE a.email=:email AND a.statopartecipazione.id = '01'")
 })

@@ -34,7 +34,10 @@ var KTWizard1 = function () {
                 wizard.goTo(step);/*fatto x2 perchè uno non va*/
             }
             if (wizard.currentStep === 2) {
-                $('#allievi').select2({//setta placeholder nella multiselect
+                $('#allievisi').select2({//setta placeholder nella multiselect
+                    placeholder: "Seleziona Allievi"
+                });
+                $('#allievino').select2({//setta placeholder nella multiselect
                     placeholder: "Seleziona Allievi"
                 });
             }
@@ -101,15 +104,24 @@ function checkStep1(wizardObj) {
 }
 
 function checkStep2(wizardObj) {
+
+    var nameall = "";
+
+    if ($("#nome_pf").val() === "1") {
+        nameall = "allievino";
+    } else {
+        nameall = "allievisi";
+    }
+
     var err = false;
     err = checkObblFieldsContent($('#step2')) ? true : err;
-    if ($('#allievi').val().length < min_allievi) {//chek num max e min allievi
+    if ($('#' + nameall).val().length < min_allievi) {//chek num max e min allievi
         err = true;
-        $('#allievi_div').removeClass("is-valid-select").addClass("is-invalid-select");
+        $('#' + nameall + '_div').removeClass("is-valid-select").addClass("is-invalid-select");
         fastSwalShow("<h3>Numero minimo di allievi non raggiunto</h3>", "wobble");
-    }else if($('#allievi').val().length > max_allievi){
+    } else if ($('#' + nameall).val().length > max_allievi) {
         err = true;
-        $('#allievi_div').removeClass("is-valid-select").addClass("is-invalid-select");
+        $('#' + nameall + '_div').removeClass("is-valid-select").addClass("is-invalid-select");
         fastSwalShow("<h3>Numero massimo di allievi superato</h3>", "wobble");
     }
 

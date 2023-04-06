@@ -256,6 +256,7 @@ $('#allievino').select2({//setta placeholder nella multiselect
 });
 
 function conoscenzeAllevi(idsel) {
+    console.log(idsel);
     var allievi = $('#'+idsel).val();
     var input = "<div id='knowledge_@id' class='col-lg-12 col-md-12'>"
             + "<div class='input-group'>"
@@ -276,7 +277,7 @@ function conoscenzeAllevi(idsel) {
                 $('#knowlege_channel').append(
                         input.split("@id").join(a)
                         .replace("@nome", $("#"+idsel+" option[value='" + a + "']").text())
-                        .replace("@canale", canali.get(a) === null ? "" : canali.get(a)));
+                        .replace("@canale", (canali.get(a) === null || canali.get(a) === undefined )  ? "" : canali.get(a)));
             }
         });
         allievi_old = allievi;
