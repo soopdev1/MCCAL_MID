@@ -183,6 +183,9 @@ public class Allievi implements Serializable {
     @Column(name = "impresa_sede")
     private String sedeimpresa;
     
+    @Column(name = "impresa_sede_operativa")
+    private String sedeoperativaimpresa;
+    
     
     
     public Allievi() {
@@ -232,6 +235,14 @@ public class Allievi implements Serializable {
             this.condizione_lavorativa = new Condizione_Lavorativa();
             this.documenti = new ArrayList<>();
         }
+    }
+
+    public String getSedeoperativaimpresa() {
+        return sedeoperativaimpresa;
+    }
+
+    public void setSedeoperativaimpresa(String sedeoperativaimpresa) {
+        this.sedeoperativaimpresa = sedeoperativaimpresa;
     }
 
     public boolean isImpresaesistente() {

@@ -239,6 +239,11 @@ public class OperazioniSA extends HttpServlet {
                     a.setPivaimpresa(new String(request.getParameter("partitaivaimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
                     a.setAtecoimpresa(e.getEm().find(Ateco.class, request.getParameter("atecoimpresa")));
                     a.setSedeimpresa(new String(request.getParameter("sedelegaleimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
+                    if (new String(request.getParameter("sedeoperativaimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8).trim().equals("")) {
+                        a.setSedeoperativaimpresa(new String(request.getParameter("sedelegaleimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
+                    } else {
+                        a.setSedeoperativaimpresa(new String(request.getParameter("sedeoperativaimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
+                    }
                 } else { //TUTTO NULL
                     a.setImpresaesistente(false);
                     a.setRuoloimpresa(null);
@@ -246,6 +251,7 @@ public class OperazioniSA extends HttpServlet {
                     a.setPivaimpresa(null);
                     a.setAtecoimpresa(null);
                     a.setSedeimpresa(null);
+                    a.setSedeoperativaimpresa(null);
                 }
 
                 e.begin();
@@ -344,6 +350,11 @@ public class OperazioniSA extends HttpServlet {
                     a.setPivaimpresa(new String(request.getParameter("partitaivaimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
                     a.setAtecoimpresa(e.getEm().find(Ateco.class, request.getParameter("atecoimpresa")));
                     a.setSedeimpresa(new String(request.getParameter("sedelegaleimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
+                    if (new String(request.getParameter("sedeoperativaimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8).trim().equals("")) {
+                        a.setSedeoperativaimpresa(new String(request.getParameter("sedelegaleimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
+                    } else {
+                        a.setSedeoperativaimpresa(new String(request.getParameter("sedeoperativaimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
+                    }
                 } else { //TUTTO NULL
                     a.setImpresaesistente(false);
                     a.setRuoloimpresa(null);

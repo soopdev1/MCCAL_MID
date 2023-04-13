@@ -136,6 +136,10 @@ function impresaesistente() {
         $("#sedelegaleimpresa").attr("disabled", true);
         $("#sedelegaleimpresa").attr("placeholder", "Sede Legale");
         $("#sedelegaleimpresa").removeClass("is-invalid");
+        
+        $("#sedeoperativaimpresa").attr("disabled", true);
+        $("#sedeoperativaimpresa").attr("placeholder", "Sede Legale");
+        $("#sedeoperativaimpresa").removeClass("is-invalid");
 
     } else {
         $('.classimpok').css("display", "");
@@ -151,6 +155,9 @@ function impresaesistente() {
 
         $("#sedelegaleimpresa").removeAttr("disabled");
         $("#sedelegaleimpresa").removeAttr("placeholder");
+
+        $("#sedeoperativaimpresa").removeAttr("disabled");
+        $("#sedeoperativaimpresa").removeAttr("placeholder");
     }
 }
 

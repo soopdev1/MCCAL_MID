@@ -223,7 +223,49 @@
                                                                             </select>
                                                                         </div>
                                                                     </div>
+                                                                    <div class="form-group col-xl-4 col-lg-6">
+                                                                        <label>Titolo di studio </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                        <div class="dropdown bootstrap-select form-control kt-" id="titolo_studio_div" style="padding: 0;">
+                                                                            <select class="form-control kt-select2-general obbligatory" id="titolo_studio" name="titolo_studio"  style="width: 100%">
+                                                                                <option value="-">Seleziona titolo di studio</option>
+                                                                                <%for (TitoliStudio t : ts) {%>
+                                                                                <option value="<%=t.getCodice()%>"><%=t.getDescrizione()%></option>
+                                                                                <%}%>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-xl-4 col-lg-6">
+                                                                        <label>Condizione lavorativa precedente </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                        <div class="dropdown bootstrap-select form-control kt-" id="condizione_lavorativa_div" style="padding: 0;">
+                                                                            <select class="form-control kt-select2-general obbligatory" id="condizione_lavorativa" name="condizione_lavorativa"  style="width: 100%">
+                                                                                <option value="-">Seleziona condizione lavorativa precedente</option>
+                                                                                <%for (Condizione_Lavorativa c : condlavprec) {%>
+                                                                                <option value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
+                                                                                <%}%>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-xl-4 col-lg-6">
+                                                                        <label>Condizione di Mercato </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                        <div class="dropdown bootstrap-select form-control kt-" id="condizione_div" style="padding: 0;">
+                                                                            <select class="form-control kt-select2-general obbligatory" id="condizione" name="condizione"  style="width: 100%">
+                                                                                <option value="-">Seleziona condizione di mercato</option>
+                                                                                <%for (Condizione_Mercato c : condizione) {%>
+                                                                                <option value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
+                                                                                <%}%>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-xl-4 col-lg-6">
+                                                                        <label>Email </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                        <input type="text" class="form-control obbligatory" id="email" name="email" />
+                                                                    </div>
+                                                                    <div class="form-group col-xl-4 col-lg-6">
+                                                                        <label>Data Richiesta Iscrizione (COMPILAZIONE MODELLO 1) </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                        <input type="text" class="form-control obbligatory" name="iscrizionegg" id="iscrizionegg" autocomplete="off" readonly/>
+                                                                    </div>
                                                                 </div>  
+
                                                                 <h5>Residenza</h5>
                                                                 <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
                                                                 <div class="form-row">
@@ -326,11 +368,11 @@
                                                                     </div>
                                                                 </div>
                                                                 <br>
-                                                                <h5>Tipologia di Impresa</h5> 
+                                                                <h5>Tipologia di Partecipante</h5> 
                                                                 <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
                                                                 <div class="form-row">
                                                                     <div class="form-group col-lg-12">
-                                                                        <label>Impresa Esistente </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                        <label>Partecipante afferente ad impresa <u>ESISTENTE</u> </label><label class="kt-font-danger kt-font-boldest">*</label>
                                                                         <div class="form-group" style="margin-bottom: 0rem;">
                                                                             <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
                                                                                 <label>
@@ -380,79 +422,25 @@
                                                                             </select>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group col-xl-8 col-lg-6">
-                                                                        <label>Sede legale (Indirizzo Completo) </label><label class="classimpok kt-font-danger kt-font-boldest">*</label>
+                                                                    <div class="form-group col-xl-4 col-lg-6">
+                                                                        <label>Sede Legale (Indirizzo Completo) </label><label class="classimpok kt-font-danger kt-font-boldest">*</label>
                                                                         <div class="dropdown bootstrap-select form-control kt-" 
                                                                              id="sedelegaleimpresa_div" style="padding: 0;">
                                                                             <input type="text" class="form-control" id="sedelegaleimpresa" name="sedelegaleimpresa" />
                                                                         </div>                                                                    
-                                                                    </div>    
-                                                                </div>    
-                                                                <br>
-                                                                <h5>Documentazione</h5> 
-                                                                <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                                <div class="form-row">
-                                                                    <div class="form-group col-xl-4 col-lg-6">
-                                                                        <label>Titolo di studio </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <div class="dropdown bootstrap-select form-control kt-" id="titolo_studio_div" style="padding: 0;">
-                                                                            <select class="form-control kt-select2-general obbligatory" id="titolo_studio" name="titolo_studio"  style="width: 100%">
-                                                                                <option value="-">Seleziona titolo di studio</option>
-                                                                                <%for (TitoliStudio t : ts) {%>
-                                                                                <option value="<%=t.getCodice()%>"><%=t.getDescrizione()%></option>
-                                                                                <%}%>
-                                                                            </select>
-                                                                        </div>
                                                                     </div>
                                                                     <div class="form-group col-xl-4 col-lg-6">
-                                                                        <label>Condizione lavorativa precedente </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <!--29-04-2020 MODIFICA - CONDIZIONE LAVORATIVA PRECEDENTE-->
-                                                                        <!--<input type="text" class="form-control obbligatory" id="neet" name="neet" />-->
-                                                                        <div class="dropdown bootstrap-select form-control kt-" id="condizione_lavorativa_div" style="padding: 0;">
-                                                                            <select class="form-control kt-select2-general obbligatory" id="condizione_lavorativa" name="condizione_lavorativa"  style="width: 100%">
-                                                                                <option value="-">Seleziona condizione lavorativa precedente</option>
-                                                                                <%for (Condizione_Lavorativa c : condlavprec) {%>
-                                                                                <option value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
-                                                                                <%}%>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group col-xl-4 col-lg-6">
-                                                                        <label>Condizione di Mercato </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <div class="dropdown bootstrap-select form-control kt-" id="condizione_div" style="padding: 0;">
-                                                                            <select class="form-control kt-select2-general obbligatory" id="condizione" name="condizione"  style="width: 100%">
-                                                                                <option value="-">Seleziona condizione di mercato</option>
-                                                                                <%for (Condizione_Mercato c : condizione) {%>
-                                                                                <option value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
-                                                                                <%}%>
-                                                                            </select>
-                                                                        </div>
+                                                                        <label>Sede Operativa (Indirizzo Completo se diversa da quella legale) </label>
+                                                                        <div class="dropdown bootstrap-select form-control kt-" 
+                                                                             id="sedelegaleimpresa_div" style="padding: 0;">
+                                                                            <input type="text" class="form-control" id="sedeoperativaimpresa" name="sedeoperativaimpresa" />
+                                                                        </div>                                                                    
                                                                     </div>
                                                                 </div>  
-                                                                <div class="form-row">
-                                                                    <div class="form-group col-xl-4 col-lg-6">
-                                                                        <label>Email </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control obbligatory" id="email" name="email" />
-                                                                    </div>
-                                                                    <div class="form-group col-xl-4 col-lg-6">
-                                                                        <label>Centro per l'impiego di competenza </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <div class="dropdown bootstrap-select form-control kt-" id="cpi_div" style="padding: 0;">
-                                                                            <select class="form-control kt-select2-general obbligatory" id="cpi" name="cpi"  style="width: 100%">
-                                                                                <option value="-">Seleziona CPI</option>
-                                                                                <%for (CPI c : cpi) {%>
-                                                                                <option value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
-                                                                                <%}%>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group col-xl-2 col-lg-6">
-                                                                        <label>Data iscrizione G.G. </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control obbligatory" name="iscrizionegg" id="iscrizionegg" autocomplete="off" readonly/>
-                                                                    </div>
-                                                                    <div class="form-group col-xl-2 col-lg-6">
-                                                                        <label>Data presa in carico CPI </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control obbligatory" name="datacpi" id="datacpi" autocomplete="off" readonly/>
-                                                                    </div>
-                                                                </div>
+                                                                <br>
+                                                                <input type="hidden" name="cpi" id="cpi" value="CPICZ1" />
+                                                                <input type="hidden" name="datacpi" id="datacpi" value="01/01/2023" />
+                                                                <h5>Elenco Documenti</h5> 
                                                                 <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
                                                                 <div class="form-group row">
                                                                     <%for (TipoDoc_Allievi t : tipo_doc) {%>
