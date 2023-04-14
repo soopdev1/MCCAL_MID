@@ -257,10 +257,15 @@ public class OperazioniSA extends HttpServlet {
                 e.begin();
                 e.persist(a);
                 for (TipoDoc_Allievi t : tipo_doc) {
-                    p = request.getPart("doc_" + t.getId());
-                    ext = p.getSubmittedFileName().substring(p.getSubmittedFileName().lastIndexOf("."));
-                    Utility.PartWrite(p, path + t.getDescrizione() + today + "_" + request.getParameter("codicefiscale") + ext);
-                    documenti.add(new Documenti_Allievi(path + t.getDescrizione() + today + "_" + request.getParameter("codicefiscale") + ext, t, null, a));
+                    try {
+                        if (request.getPart("doc_" + t.getId()) != null) {
+                            p = request.getPart("doc_" + t.getId());
+                            ext = p.getSubmittedFileName().substring(p.getSubmittedFileName().lastIndexOf("."));
+                            Utility.PartWrite(p, path + t.getDescrizione() + today + "_" + request.getParameter("codicefiscale") + ext);
+                            documenti.add(new Documenti_Allievi(path + t.getDescrizione() + today + "_" + request.getParameter("codicefiscale") + ext, t, null, a));
+                        }
+                    } catch (Exception e1) {
+                    }
                 }
                 a.setDocumenti(documenti);
                 e.merge(a);
