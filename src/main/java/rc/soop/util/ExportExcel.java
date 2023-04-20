@@ -229,6 +229,7 @@ public class ExportExcel {
     public static String createExcelAllievi(List<Allievi> allievi) throws ParseException, FileNotFoundException {
         Entity e = new Entity();
         double euro_ore = Double.parseDouble(e.getPath("euro_ore"));
+        double euro_ore_esistenti = Double.parseDouble(e.getPath("euro_ore_esistenti"));
         File template = new File(e.getPath("template_excel"));
         String output_name = e.getPath("output_excel_archive") + "export_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".xlsx";
         e.close();
@@ -309,6 +310,9 @@ public class ExportExcel {
                     writeCell(row, "SI");
 
                     BigDecimal bd = new BigDecimal(Double.parseDouble(String.valueOf(ore_tot_int)) * euro_ore);
+                    if (a.isImpresaesistente()) { //IMPRESE ESISTENTI
+                        bd = new BigDecimal(Double.parseDouble(String.valueOf(ore_tot_int)) * euro_ore_esistenti);
+                    }
                     bd.setScale(2, RoundingMode.HALF_EVEN);
                     writeCell(row, String.format("€ %.2f", bd.doubleValue()));
 

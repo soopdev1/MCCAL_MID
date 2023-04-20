@@ -37,19 +37,6 @@ var KTDatatablesDataSourceAjaxServer = function () {
                     className: 'text-center'},
                 {data: 'nome.descrizione',
                     className: 'text-center'},
-                {data: 'misto',
-                    className: 'text-center',
-                    render: function (data, type, row) {
-                        if (row.misto) {
-                            if (row.cip_misto === null) {
-                                return "SI";
-                            } else {
-                                return "SI<br>(" + row.cip_misto + ")";
-                            }
-                        } else {
-                            return "NO";
-                        }
-                    }},
                 {data: 'ore',
                     className: 'text-center'},
                 {data: 'start',
@@ -137,20 +124,20 @@ var KTDatatablesDataSourceAjaxServer = function () {
                     }
                 }
                 , {
-                    targets: 4,
+                    targets: 3,
                     title: "ORE FASE A",
                     render: function (data, type, full) {
                         return data.toFixed(2);
                     }
                 }
                 , {
-                    targets: 5,
+                    targets: 4,
                     type: 'date-it',
                     render: function (data, type, row, meta) {
                         return formattedDate(new Date(data));
                     }
                 }, {
-                    targets: 6,
+                    targets: 5,
                     type: 'date-it',
                     render: function (data, type, row, meta) {
                         return formattedDate(new Date(data));
@@ -162,7 +149,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
     return {
         init: function () {
             initTable1();
-        },
+        }
     };
 }();
 
@@ -202,7 +189,7 @@ var DatatablesAllievi = function () {
                 {data: 'cognome'},
                 {data: 'codicefiscale'},
                 {data: 'datanascita'},
-                {data: 'comune_domicilio'},
+                {data: 'comune_domicilio'}
             ],
             drawCallback: function () {
                 $('[data-toggle="kt-tooltip"]').tooltip();
@@ -221,26 +208,26 @@ var DatatablesAllievi = function () {
                                 + '<div class="dropdown-menu dropdown-menu-left">';
                         option += '<a class="dropdown-item" href="javascript:void(0);" onclick="swalDocumentAllievo(' + row.id + ')"><i class="fa fa-file-alt"></i> Visualizza Documenti</a>';
 
-                        if (row.statopartecipazione.id == "01") {
-                            if (row.progetto.stato.controllare == 0) {
+                        if (row.statopartecipazione.id === "01") {
+                            if (row.progetto.stato.controllare === 0) {
                                 option += '<a class="dropdown-item " href="javascript:void(0);" onclick="swalSigma(' + row.id + ',\'' + row.statopartecipazione.id + '\')"><i class="fa fa-user-check kt-font-success" data-container="body" data-html="true" data-toggle="kt-tooltip" title="Stato ' + row.statopartecipazione.descrizione + '"></i>Cambia stato di partecipazione</a>';
-                                if (row.progetto.stato.id == "FA") {
-                                    if (row.esito == "Fase A") {
+                                if (row.progetto.stato.id === "FA") {
+                                    if (row.esito === "Fase A") {
                                         option += '<a class="dropdown-item " href="javascript:void(0);" onclick="setEsito(' + row.id + ',\'Fase B\')"><i class="fa fa-check-circle kt-font-io"></i>Continua alla Fase B</a>';
-                                    } else if (row.esito == "Fase B") {
+                                    } else if (row.esito === "Fase B") {
                                         option += '<a class="dropdown-item " href="javascript:void(0);" onclick="setEsito(' + row.id + ',\'Fase A\')"><i class="fa fa-check-circle kt-font-io-n"></i>Ferma alla Fase A</a>';
                                     }
-                                } else if (row.progetto.stato.id == "FB") {
-                                    if (row.esito == "Fase A") {
+                                } else if (row.progetto.stato.id === "FB") {
+                                    if (row.esito === "Fase A") {
                                         option += '<a class="dropdown-item "><i class="fa fa-check-circle kt-font-io"></i>Non assegnato alla Fase B</a>';
-                                    } else if (row.esito == "Fase B") {
+                                    } else if (row.esito === "Fase B") {
                                         option += '<a class="dropdown-item " href="javascript:void(0);" style="pointer-events: none;cursor: default;"><i class="fa fa-check-circle kt-font-io-n"></i>Assegnato alla Fase B</a>';
                                         option += '<a class="dropdown-item" href="javascript:void(0);" onclick="uploadRegistro(' + row.id + ',' + row.progetto.id + ',' + row.progetto.end_fa + ')" ><i class="flaticon-list"></i> Carica Registro giornaliero</a>';
                                     }
-                                } else if (row.progetto.stato.id == "FBE") {
-                                    if (row.esito == "Fase A") {
+                                } else if (row.progetto.stato.id === "FBE") {
+                                    if (row.esito === "Fase A") {
                                         option += '<a class="dropdown-item "><i class="fa fa-check-circle kt-font-io"></i>Non assegnato alla Fase B</a>';
-                                    } else if (row.esito == "Fase B") {
+                                    } else if (row.esito === "Fase B") {
                                         option += '<a class="dropdown-item " href="javascript:void(0);" style="pointer-events: none;cursor: default;"><i class="fa fa-check-circle kt-font-io-n"></i>Assegnato alla Fase B</a>';
                                         option += '<a class="dropdown-item" href="javascript:void(0);" onclick="uploadRegistro(' + row.id + ',' + row.progetto.id + ',' + row.progetto.end_fa + ')" ><i class="flaticon-list"></i> Carica Registro giornaliero</a>';
                                     }
@@ -415,9 +402,8 @@ function swalDocumentAllievo(idallievo) {
         var json = JSON.parse(resp);
         for (var i = 0; i < json.length; i++) {
             registri.set(json[i].id, json[i]);
-            giorno = json[i].giorno != null ? " del " + formattedDate(new Date(json[i].giorno)) : "";
-
-            if (json[i].giorno != null) {
+            giorno = json[i].giorno !== null ? " del " + formattedDate(new Date(json[i].giorno)) : "";
+            if (json[i].giorno !== null) {
                 registri_aula.set(json[i].id, json[i]);
                 $("#prg_docs").append(doc_registro_aula.replace("@func", "showRegistro(" + json[i].id + ")")
                         .replace("@nome", json[i].tipo.descrizione + giorno));
@@ -437,7 +423,7 @@ function swalDocumentAllievo(idallievo) {
 function showRegistro(idregistro) {
     var registro = registri.get(idregistro);
     var doc_registro;
-    if (registro.orariostart_pom != null) {
+    if (registro.orariostart_pom !== null) {
         doc_registro = getHtml("doc_registro_individiale_pomeriggio", context);
         doc_registro = doc_registro.replace("@start_pome", formattedTime(registro.orariostart_pom).replace(":0", ":00"))
                 .replace("@end_pome", formattedTime(registro.orarioend_pom).replace(":0", ":00"));
@@ -586,7 +572,7 @@ function returnTotalHHbyAllievo(idallievo) {
         url: context + "/OperazioniSA?type=getTotalHoursRegistriByAllievo&idallievo=" + idallievo,
         success: function (resp) {
             var json = JSON.parse(resp);
-            if (resp != null)
+            if (resp !== null)
                 totaleore = json.totale;
             today = json.today;
         }
@@ -609,7 +595,7 @@ function uploadRegistro(idallievo, idprogetto, srtartFb) {
 }
 
 function swaluploadRegistro(idallievo, idprogetto, totalms, srtartFb) {//swalReg
-    srtartFb = srtartFb == null ? 0 : srtartFb;
+    srtartFb = srtartFb === null ? 0 : srtartFb;
     swal.fire({
         title: 'Carica Registro',
         html: getHtml("swalReg", context),

@@ -887,7 +887,7 @@ function checkObblFieldsContent(content) {
 function checkRequiredFile() {
     var err = false;
     $('input:file[tipo=obbligatory]').each(function () {
-        if ($(this)[0].files.length == 0) {
+        if ($(this)[0].files.length === 0) {
             err = true;
             $(this).attr("class", "custom-file-input is-invalid");
         } else {
@@ -900,7 +900,7 @@ function checkRequiredFile() {
 function checkRequiredFileContent(content) {
     var err = false;
     content.find('input:file[tipo=obbligatory]').each(function () {
-        if ($(this)[0].files.length == 0) {
+        if ($(this)[0].files.length === 0) {
             err = true;
             $(this).attr("class", "custom-file-input is-invalid");
         } else {

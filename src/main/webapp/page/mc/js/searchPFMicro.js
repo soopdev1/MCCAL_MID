@@ -35,19 +35,6 @@ var KTDatatablesDataSourceAjaxServer = function () {
                     className: 'text-center'},
                 {data: 'nome.descrizione',
                     className: 'text-center'},
-                {data: 'misto',
-                    className: 'text-center',
-                    render: function (data, type, row) {
-                        if (row.misto) {
-                            if (row.cip_misto === null) {
-                                return "SI";
-                            } else {
-                                return "SI<br>(" + row.cip_misto + ")";
-                            }
-                        } else {
-                            return "NO";
-                        }
-                    }},
                 {data: 'ore',
                     className: 'text-center'},
                 {data: 'start',
@@ -161,26 +148,26 @@ var KTDatatablesDataSourceAjaxServer = function () {
                         return option;
                     }
                 }, {
-                    targets: 4,
+                    targets: 3,
                     title: "ORE FASE A",
                     render: function (data, type, full) {
                         return data.toFixed(2);
                     }
                 },
                 {
+                    targets: 4,
+                    type: 'date-it',
+                    render: function (data, type, row, meta) {
+                        return formattedDate(new Date(data));
+                    }
+                }, {
                     targets: 5,
                     type: 'date-it',
                     render: function (data, type, row, meta) {
                         return formattedDate(new Date(data));
                     }
                 }, {
-                    targets: 6,
-                    type: 'date-it',
-                    render: function (data, type, row, meta) {
-                        return formattedDate(new Date(data));
-                    }
-                }, {
-                    targets: 12,
+                    targets: 11,
                     render: function (data, type, row, meta) {
                         if (data === 1)
                             return "Rendicontato";
@@ -190,13 +177,13 @@ var KTDatatablesDataSourceAjaxServer = function () {
                             return "No";
                     }
                 }, {
-                    targets: 13,
+                    targets: 12,
                     orderable: false,
                     render: function (data, type, row, meta) {
                         return currencyFormatDecimal(Number(data));
                     }
                 }, {
-                    targets: 14,
+                    targets: 13,
                     orderable: false,
                     render: function (data, type, row, meta) {
                         return currencyFormatDecimal(Number(data));

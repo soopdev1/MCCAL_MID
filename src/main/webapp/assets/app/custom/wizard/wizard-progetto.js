@@ -2,6 +2,7 @@
 // Class definition
 var min_allievi;
 var max_allievi;
+var max_allievi_esistenti;
 var KTWizard1 = function () {
     // Base elements
     var wizardEl;
@@ -106,10 +107,12 @@ function checkStep1(wizardObj) {
 function checkStep2(wizardObj) {
 
     var nameall = "";
-
+    var maxa;
     if ($("#nome_pf").val() === "1") {
         nameall = "allievino";
+        maxa = max_allievi;
     } else {
+        maxa = max_allievi_esistenti;
         nameall = "allievisi";
     }
 
@@ -118,11 +121,29 @@ function checkStep2(wizardObj) {
     if ($('#' + nameall).val().length < min_allievi) {//chek num max e min allievi
         err = true;
         $('#' + nameall + '_div').removeClass("is-valid-select").addClass("is-invalid-select");
-        fastSwalShow("<h3>Numero minimo di allievi non raggiunto</h3>", "wobble");
-    } else if ($('#' + nameall).val().length > max_allievi) {
+        fastSwalShow("<h3>Numero minimo di allievi non raggiunto.</h3>", "wobble");
+    } else if ($('#' + nameall).val().length > maxa) {
         err = true;
         $('#' + nameall + '_div').removeClass("is-valid-select").addClass("is-invalid-select");
-        fastSwalShow("<h3>Numero massimo di allievi superato</h3>", "wobble");
+        fastSwalShow("<h3>Numero massimo di allievi (" + maxa + ") superato.</h3>", "wobble");
+    }
+
+    //check codici ateco
+    if ($("#nome_pf").val() === "2") {
+
+        var startat = "";
+        $('#allievisi option:selected').each(function () {
+            var ateco = $(this).attr('ateco');
+            if (startat === "") {
+                startat = ateco.substring(0, 5);
+            } else {
+                if (startat !== ateco.substring(0, 5)) {
+                    err = true;
+                    $('#allievisi_div').removeClass("is-valid-select").addClass("is-invalid-select");
+                    fastSwalShow("<h3>I codici ATECO degli allievi devono appartenere alla stessa classe (4 cifre).</h3>", "wobble");
+                }
+            }
+        });
     }
 
 

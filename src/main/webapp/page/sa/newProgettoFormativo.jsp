@@ -37,7 +37,9 @@
             sedi = sedi == null ? new ArrayList() : sedi;
             int n_allievi = Integer.parseInt(e.getPath("min_allievi"));
             int max_allievi = Integer.parseInt(e.getPath("max_alunni"));
+            int max_allievi_esistenti = Integer.parseInt(e.getPath("max_alunni_esistenti"));
             e.close();
+            
             boolean fancy = request.getParameter("fb") != null && request.getParameter("fb").equals("1") ? false : true;
 %>
 <html>
@@ -241,7 +243,7 @@
                                                                             <div class="select-div" id="allievi_div">
                                                                                 <select class="form-control kt-select2 obbligatory" id="allievisi" name="allievi[]" multiple="multiple" style="width: 100%">
                                                                                     <%for (Allievi a : alunniSI) {%>
-                                                                                    <option value="<%=a.getId()%>"><%=a.getCognome()%> <%=a.getNome()%> (<%=a.getCodicefiscale()%>)</option>
+                                                                                    <option value="<%=a.getId()%>" ateco="<%=a.getAtecoimpresa().getCodice()%>"><%=a.getCognome()%> <%=a.getNome()%> (<%=a.getCodicefiscale()%>) - <%=a.getAtecoimpresa().getCodice()%></option>
                                                                                     <%}%>
                                                                                 </select>
                                                                             </div>
@@ -428,6 +430,7 @@
 
             min_allievi = <%=n_allievi%>;
             max_allievi = <%=max_allievi%>;
+            max_allievi_esistenti = <%=max_allievi_esistenti%>;
 
             <%for (Docenti d : docente) {%>
             doc_docenti.set('<%=d.getId()%>', {"docid": "<%=d.getDocId()%>", "curriculum": "<%=d.getCurriculum()%>", "scadenza": new Date(<%=d.getScadenza_doc() == null ? "0" : d.getScadenza_doc().getTime()%>)});

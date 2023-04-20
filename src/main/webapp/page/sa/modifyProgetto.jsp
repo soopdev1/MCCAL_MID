@@ -34,6 +34,9 @@
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             int n_allievi = Integer.parseInt(e.getPath("min_allievi"));
             int max_allievi = Integer.parseInt(e.getPath("max_alunni"));
+            if (p.getNome().getId() == 2L) {
+                max_allievi = Integer.parseInt(e.getPath("max_alunni_esistenti"));
+            }
             e.close();
 %>
 <html>

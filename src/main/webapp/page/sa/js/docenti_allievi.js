@@ -8,7 +8,7 @@ var context = document.getElementById("docenti_allievi").getAttribute("data-cont
 var doc_docenti = new Map();
 
 $('#docenti').select2({//setta placeholder nella multiselect
-    placeholder: "Seleziona Docenti",
+    placeholder: "Seleziona Docenti"
 });
 
 $('#docenti').on("change", function () {
@@ -52,12 +52,12 @@ function updateDivDoenti() {
     if (docenti.length > 0) {
         $.each(docenti, function (i, a) {
             all_doc = input;
-            if (doc_docenti.get(a).docid != null && doc_docenti.get(a).docid != 'null' && doc_docenti.get(a).scadenza > today) {
+            if (doc_docenti.get(a).docid !== null && doc_docenti.get(a).docid !== 'null' && doc_docenti.get(a).scadenza > today) {
                 all_doc = all_doc.replace("@docid", doc_id.replace("@path", doc_docenti.get(a).docid));
             } else {
                 all_doc = all_doc.replace("@docid", no_doc_id);
             }
-            if (doc_docenti.get(a).curriculum != null && doc_docenti.get(a).curriculum != 'null') {
+            if (doc_docenti.get(a).curriculum !== null && doc_docenti.get(a).curriculum !== 'null') {
                 all_doc = all_doc.replace("@curr", curr.replace("@path", doc_docenti.get(a).curriculum));
             } else {
                 all_doc = all_doc.replace("@curr", no_curr);
@@ -91,7 +91,7 @@ function uploadDocId(id) {
         },
         onOpen: function () {
             $('#docid').change(function (e) {
-                if (e.target.files.length != 0)
+                if (e.target.files.length !== 0)
                     //$('#label_file').html(e.target.files[0].name);
                     if (e.target.files[0].name.length > 30)
                         $('#label_file').html(e.target.files[0].name.substring(0, 30) + "...");
@@ -110,7 +110,7 @@ function uploadDocId(id) {
                 todayHighlight: true,
                 autoclose: true,
                 format: 'dd/mm/yyyy',
-                startDate: new Date(),
+                startDate: new Date()
             });
         },
         preConfirm: function () {
@@ -127,7 +127,7 @@ function uploadDocId(id) {
             } else {
                 return false;
             }
-        },
+        }
     }).then((result) => {
         if (result.value) {
             showLoad();
@@ -183,8 +183,7 @@ function uploadCurriculum(id) {
         },
         onOpen: function () {
             $('#curriculum').change(function (e) {
-                if (e.target.files.length != 0)
-                    //$('#label_file').html(e.target.files[0].name);
+                if (e.target.files.length !== 0)
                     if (e.target.files[0].name.length > 30)
                         $('#label_file').html(e.target.files[0].name.substring(0, 30) + "...");
                     else
@@ -205,7 +204,7 @@ function uploadCurriculum(id) {
             } else {
                 return false;
             }
-        },
+        }
     }).then((result) => {
         if (result.value) {
             showLoad();
@@ -242,6 +241,7 @@ var canali = new Map();
 var allievi_old = [];
 
 $('#allievisi').on("change", function () {
+    
     conoscenzeAllevi('allievisi');
 });
 $('#allievino').on("change", function () {
@@ -256,7 +256,6 @@ $('#allievino').select2({//setta placeholder nella multiselect
 });
 
 function conoscenzeAllevi(idsel) {
-    console.log(idsel);
     var allievi = $('#'+idsel).val();
     var input = "<div id='knowledge_@id' class='col-lg-12 col-md-12'>"
             + "<div class='input-group'>"

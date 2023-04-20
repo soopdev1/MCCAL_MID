@@ -212,6 +212,10 @@
                                                                         <label id="msg_cf"></label>
                                                                     </div>
                                                                     <div class="form-row">
+                                                                        <div class="form-group col-xl-3 col-lg-3">
+                                                                            <label>Telefono </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                            <input type="text" class="form-control obbligatory" id="telefono" name="telefono" value="<%=a.getTelefono()%>" onkeypress="return isNumber(event);" />
+                                                                        </div>  
                                                                         <div class="form-group col-xl-3 col-lg-6">
                                                                             <label>Cittadinanza</label><label class="kt-font-danger kt-font-boldest">*</label>
                                                                             <div class="dropdown bootstrap-select form-control kt-" id="cittadinanza_div" style="padding: 0;">
@@ -227,10 +231,61 @@
                                                                                 </select>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="form-group col-xl-3 col-lg-3">
-                                                                            <label>Telefono </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control obbligatory" id="telefono" name="telefono" value="<%=a.getTelefono()%>" onkeypress="return isNumber(event);" />
-                                                                        </div>        
+                                                                        <div class="form-group col-xl-3 col-lg-6">
+                                                                            <label>Titolo di studio </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                            <div class="dropdown bootstrap-select form-control kt-" id="titolo_studio_div" style="padding: 0;">
+                                                                                <select class="form-control kt-select2-general obbligatory" id="titolo_studio" name="titolo_studio"  style="width: 100%">
+                                                                                    <option value="-">Seleziona titolo di studio</option>
+                                                                                    <%for (TitoliStudio t : ts) {
+                                                                                            if (t.getCodice().equals(a.getTitoloStudio().getCodice())) {%>
+                                                                                    <option value="<%=t.getCodice()%>" selected><%=t.getDescrizione()%></option>
+                                                                                    <%} else {%>
+                                                                                    <option value="<%=t.getCodice()%>"><%=t.getDescrizione()%></option>
+                                                                                    <%}
+                                                                                        }%>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group col-xl-3 col-lg-6">
+                                                                            <label>Condizione lavorativa precedente </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                            <div class="dropdown bootstrap-select form-control kt-" id="condizione_lavorativa_div" style="padding: 0;">
+                                                                                <select class="form-control kt-select2-general obbligatory" id="condizione_lavorativa" name="condizione_lavorativa"  style="width: 100%">
+                                                                                    <option value="-">Seleziona condizione di mercato</option>
+                                                                                    <%for (Condizione_Lavorativa c : condlavprec) {
+                                                                                            if (c.equals(a.getCondizione_lavorativa())) {%>
+                                                                                    <option selected value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
+                                                                                    <%} else {%>
+                                                                                    <option value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
+                                                                                    <%}
+                                                                                        }%>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group col-xl-3 col-lg-6">
+                                                                            <label>Condizione di Mercato </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                            <div class="dropdown bootstrap-select form-control kt-" id="condizione_div" style="padding: 0;">
+                                                                                <select class="form-control kt-select2-general obbligatory" id="condizione" name="condizione"  style="width: 100%">
+                                                                                    <option value="-">Seleziona condizione di mercato</option>
+                                                                                    <%for (Condizione_Mercato c : condizione) {
+                                                                                            if (c.equals(a.getCondizione_mercato())) {%>
+                                                                                    <option selected value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
+                                                                                    <%} else {%>
+                                                                                    <option value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
+                                                                                    <%}
+                                                                                        }%>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group col-xl-3 col-lg-6">
+                                                                            <label>Email </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                            <input type="text" class="form-control" id="email" name="email" value="<%=a.getEmail()%>" />
+                                                                        </div>
+                                                                        <div class="form-group col-xl-6 col-lg-6">
+                                                                            <label>Data Richiesta Iscrizione (COMPILAZIONE MODELLO 1) </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                            <input type="text" class="form-control obbligatory" name="iscrizionegg" id="iscrizionegg" value="<%=sdf.format(a.getIscrizionegg())%>"  />
+                                                                        </div>
+                                                                        <input type="hidden" name="cpi" id="cpi" value="CPICZ1" />
+                                                                        <input type="hidden" name="datacpi" id="datacpi" value="01/01/2023" />
                                                                     </div>
                                                                     <h5>Residenza</h5>
                                                                     <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
@@ -342,11 +397,11 @@
                                                                         </div>
                                                                     </div>
                                                                     <br>
-                                                                    <h5>Tipologia di Impresa</h5> 
+                                                                    <h5>Tipologia di Partecipante</h5> 
                                                                     <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
                                                                     <div class="form-row">
                                                                         <div class="form-group col-lg-12">
-                                                                            <label>Impresa Esistente </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                            <label>Partecipante afferente ad impresa <u>ESISTENTE</u> </label><label class="kt-font-danger kt-font-boldest">*</label>
                                                                             <div class="form-group" style="margin-bottom: 0rem;">
                                                                                 <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
                                                                                     <label>
@@ -418,88 +473,15 @@
                                                                                        name="sedelegaleimpresa" value="<%=(a.isImpresaesistente()) ? a.getSedeimpresa() : ""%>"/>
                                                                             </div>                                                                    
                                                                         </div>    
+                                                                        <div class="form-group col-xl-8 col-lg-6">
+                                                                            <label>Sede Operativa (Indirizzo Completo) </label>
+                                                                            <div class="dropdown bootstrap-select form-control kt-" 
+                                                                                 id="sedeoperativaimpresa_div" style="padding: 0;">
+                                                                                <input type="text" class="form-control" id="sedeoperativaimpresa" 
+                                                                                       name="sedeoperativaimpresa" value="<%=(a.isImpresaesistente()) ? a.getSedeoperativaimpresa() : ""%>"/>
+                                                                            </div>                                                                    
+                                                                        </div>    
                                                                     </div>    
-                                                                    <br>
-                                                                    <h5>Documentazione</h5>
-                                                                    <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Titolo di studio </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="titolo_studio_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="titolo_studio" name="titolo_studio"  style="width: 100%">
-                                                                                    <option value="-">Seleziona titolo di studio</option>
-                                                                                    <%for (TitoliStudio t : ts) {
-                                                                                            if (t.getCodice().equals(a.getTitoloStudio().getCodice())) {%>
-                                                                                    <option value="<%=t.getCodice()%>" selected><%=t.getDescrizione()%></option>
-                                                                                    <%} else {%>
-                                                                                    <option value="<%=t.getCodice()%>"><%=t.getDescrizione()%></option>
-                                                                                    <%}
-                                                                                        }%>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Condizione lavorativa precedente </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <!--29-04-2020 MODIFICA - CONDIZIONE LAVORATIVA PRECEDENTE-->
-                                                                            <!--<input type="text" class="form-control obbligatory" id="neet" name="neet" value="<%=a.getNeet()%>" />-->
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="condizione_lavorativa_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="condizione_lavorativa" name="condizione_lavorativa"  style="width: 100%">
-                                                                                    <option value="-">Seleziona condizione di mercato</option>
-                                                                                    <%for (Condizione_Lavorativa c : condlavprec) {
-                                                                                            if (c.equals(a.getCondizione_lavorativa())) {%>
-                                                                                    <option selected value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
-                                                                                    <%} else {%>
-                                                                                    <option value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
-                                                                                    <%}
-                                                                                        }%>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group col-xl-4 col-lg-6">
-                                                                            <label>Condizione di Mercato </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="condizione_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="condizione" name="condizione"  style="width: 100%">
-                                                                                    <option value="-">Seleziona condizione di mercato</option>
-                                                                                    <%for (Condizione_Mercato c : condizione) {
-                                                                                            if (c.equals(a.getCondizione_mercato())) {%>
-                                                                                    <option selected value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
-                                                                                    <%} else {%>
-                                                                                    <option value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
-                                                                                    <%}
-                                                                                        }%>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>  
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Email </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control" id="email" name="email" value="<%=a.getEmail()%>" />
-                                                                        </div>
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Centro per l'impiego di competenza </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="cpi_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="cpi" name="cpi"  style="width: 100%">
-                                                                                    <option value="-">Seleziona CPI</option>
-                                                                                    <%for (CPI c : cpi) {
-                                                                                            if (c.getId().equals(a.getCpi().getId())) {%>
-                                                                                    <option value="<%=c.getId()%>" selected><%=c.getDescrizione()%></option>
-                                                                                    <%} else {%>
-                                                                                    <option value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
-                                                                                    <%}
-                                                                                        }%>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group col-lg-2">
-                                                                            <label>Data iscrizione G.G. </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control obbligatory" name="iscrizionegg" id="iscrizionegg" value="<%=sdf.format(a.getIscrizionegg())%>"  />
-                                                                        </div>
-                                                                        <div class="form-group col-lg-2">
-                                                                            <label>Presa in carico CPI </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control obbligatory" name="datacpi" id="datacpi" value="<%=sdf.format(a.getDatacpi())%>"  />
-                                                                        </div>
-                                                                    </div> 
                                                                 </div>    
                                                                 <div class="col-lg-2 kt-align-right">
                                                                     <a href="jascript:void(0);" class="btn btn-io submit_change" style="font-family: Poppins"><i class="flaticon2-accept"></i> Aggiorna</a>
@@ -641,7 +623,7 @@
             });
 
             $('#codicefiscale').on("change", function () {
-                if ($('#codicefiscale').val() != '<%=a.getCodicefiscale()%>') {
+                if ($('#codicefiscale').val() !== '<%=a.getCodicefiscale()%>') {
                     if (checkCF($('#codicefiscale'))) {
                         CFPresent();
                     }
@@ -903,6 +885,10 @@
                     $("#sedelegaleimpresa").attr("placeholder", "Sede Legale");
                     $("#sedelegaleimpresa").removeClass("is-invalid");
 
+                    $("#sedeoperativaimpresa").attr("disabled", true);
+                    $("#sedeoperativaimpresa").attr("placeholder", "Sede Operativa");
+                    $("#sedeoperativaimpresa").removeClass("is-invalid");
+
                 } else {
                     $('.classimpok').css("display", "");
                     $("#ruoloimpresa").removeAttr("disabled");
@@ -917,6 +903,9 @@
 
                     $("#sedelegaleimpresa").removeAttr("disabled");
                     $("#sedelegaleimpresa").removeAttr("placeholder");
+
+                    $("#sedeoperativaimpresa").removeAttr("disabled");
+                    $("#sedeoperativaimpresa").removeAttr("placeholder");
                 }
             }
 

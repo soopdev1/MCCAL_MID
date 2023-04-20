@@ -550,29 +550,12 @@ public class OperazioniMicro extends HttpServlet {
         Check2 cl2 = new Check2();
         Gestione g = new Gestione();
         Fascicolo f = new Fascicolo();
-
         Entity e = new Entity();
         JsonObject resp = new JsonObject();
         try {
             e.begin();
             String idpr = request.getParameter("idprogetto");
             ProgettiFormativi prg = e.getEm().find(ProgettiFormativi.class, Long.valueOf(idpr));
-
-            //14-10-2020 MODIFICA - TOGLIERE IMPORTO CHECKLIST
-//            double ore_convalidate = 0;
-//            for (DocumentiPrg d : prg.getDocumenti().stream().filter(p -> p.getGiorno() != null && p.getDeleted() == 0).collect(Collectors.toList())) {
-//                ore_convalidate += d.getOre_convalidate();
-//            }
-//            for (Allievi a : prg.getAllievi()) {
-//                for (Documenti_Allievi d : a.getDocumenti().stream().filter(p -> p.getGiorno() != null && p.getDeleted() == 0).collect(Collectors.toList())) {
-//                    ore_convalidate += d.getOrericonosciute() == null ? 0 : d.getOrericonosciute();
-//                }
-//            }
-//            double prezzo_ore = Double.parseDouble(e.getPath("euro_ore"));
-//            prg.setImporto(ore_convalidate * prezzo_ore);
-//            
-//            e.merge(prg);
-//            e.commit();
             cl2.setAllievi_tot(Integer.parseInt(request.getParameter("allievi_start")));
             cl2.setAllievi_ended(Integer.parseInt(request.getParameter("allievi_end")));
             cl2.setProgetto(prg);
@@ -584,7 +567,6 @@ public class OperazioniMicro extends HttpServlet {
             g.setM13(ctrlCheckbox(request.getParameter("check_m13")));
             g.setRegistro(ctrlCheckbox(request.getParameter("check_regdoc")));
             g.setStato(ctrlCheckbox(request.getParameter("check_chiuso")));
-
             cl2.setGestione(g);
             f.setNote(request.getParameter("note") == null ? "" : new String(request.getParameter("note").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
             f.setNote_esito(request.getParameter("note_esito") == null ? "" : new String(request.getParameter("note_esito").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
@@ -595,7 +577,6 @@ public class OperazioniMicro extends HttpServlet {
             f.setM2(ctrlCheckbox(request.getParameter("check_m2")));
             f.setM9(ctrlCheckbox(request.getParameter("check_m9_2")));
             cl2.setFascicolo(f);
-
             VerificheAllievo ver;
             List<VerificheAllievo> list_al = new ArrayList();
             for (String s : request.getParameterValues("allievi[]")) {
@@ -1241,6 +1222,7 @@ public class OperazioniMicro extends HttpServlet {
             ProgettiFormativi prg = e.getEm().find(ProgettiFormativi.class, Long.valueOf(request.getParameter("id")));
             prg.setRendicontato(1);
             double euro_ore = Double.parseDouble(e.getPath("euro_ore"));
+            double euro_ore_esistenti = Double.parseDouble(e.getPath("euro_ore_esistenti"));
 
 //            List<DocumentiPrg> registri = prg.getDocumenti().stream().filter(p -> p.getGiorno() != null && p.getDeleted() == 0).collect(Collectors.toList());
 //            for (Allievi a : prg.getAllievi()) {
@@ -1263,6 +1245,9 @@ public class OperazioniMicro extends HttpServlet {
                     double ore_tot = ore_a + ore_b;
                     int ore_tot_int = Double.valueOf(ore_tot).intValue();
                     BigDecimal bd = new BigDecimal(Double.parseDouble(String.valueOf(ore_tot_int)) * euro_ore);
+                    if (prg.getNome().getId() == 2L) { //IMPRESE ESISTENTI
+                        bd = new BigDecimal(Double.parseDouble(String.valueOf(ore_tot_int)) * euro_ore_esistenti);
+                    }
                     bd.setScale(2, RoundingMode.HALF_EVEN);
                     a.setImporto(bd.doubleValue());
                     e.merge(a);

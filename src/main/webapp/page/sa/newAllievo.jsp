@@ -202,17 +202,6 @@
                                                                         <input type="text" class="form-control obbligatory" id="telefono" name="telefono" onkeypress="return isNumber(event);" />
                                                                     </div>
                                                                     <div class="form-group col-xl-3 col-lg-6">
-                                                                        <label>Documento di identità </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <div class="custom-file">
-                                                                            <input type="file" tipo="obbligatory" class="custom-file-input" accept="application/pdf" name="docid" id="docid" onchange="return checkFileExtAndDim(['pdf']);">
-                                                                            <label class="custom-file-label selected" id='label_file'>Scegli File</label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group col-xl-3 col-lg-6">
-                                                                        <label>Data scadenza documento</label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control obbligatory" name="scadenzadoc" id="kt_datepicker_4_3" autocomplete="off" readonly/>
-                                                                    </div>
-                                                                    <div class="form-group col-xl-3 col-lg-6">
                                                                         <label>Cittadinanza </label><label class="kt-font-danger kt-font-boldest">*</label>
                                                                         <div class="dropdown bootstrap-select form-control kt-" id="cittadinanza_div" style="padding: 0;">
                                                                             <select class="form-control kt-select2-general obbligatory" id="cittadinanza" name="cittadinanza"  style="width: 100%">
@@ -223,6 +212,18 @@
                                                                             </select>
                                                                         </div>
                                                                     </div>
+                                                                    <div class="form-group col-xl-3 col-lg-6">
+                                                                        <label>Documento di identità </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                        <div class="custom-file">
+                                                                            <input type="file" tipo="obbligatory" class="custom-file-input" accept="application/pdf" name="docid" id="docid" onchange="return checkFileExtAndDim(['pdf']);">
+                                                                            <label class="custom-file-label selected" id='label_file'>Scegli File</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-xl-3 col-lg-6">
+                                                                        <label>Data scadenza documento</label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                        <input type="text" class="form-control obbligatory" name="scadenzadoc" id="kt_datepicker_4_3" autocomplete="off" readonly/>
+                                                                    </div>
+
                                                                     <div class="form-group col-xl-4 col-lg-6">
                                                                         <label>Titolo di studio </label><label class="kt-font-danger kt-font-boldest">*</label>
                                                                         <div class="dropdown bootstrap-select form-control kt-" id="titolo_studio_div" style="padding: 0;">
@@ -432,7 +433,7 @@
                                                                     <div class="form-group col-xl-4 col-lg-6">
                                                                         <label>Sede Operativa (Indirizzo Completo se diversa da quella legale) </label>
                                                                         <div class="dropdown bootstrap-select form-control kt-" 
-                                                                             id="sedelegaleimpresa_div" style="padding: 0;">
+                                                                             id="sedeoperativaimpresa_div" style="padding: 0;">
                                                                             <input type="text" class="form-control" id="sedeoperativaimpresa" name="sedeoperativaimpresa" />
                                                                         </div>                                                                    
                                                                     </div>
@@ -444,10 +445,12 @@
                                                                 <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
                                                                 <div class="form-group row">
                                                                     <%for (TipoDoc_Allievi t : tipo_doc) {%>
-                                                                    <div class="form-group col-xl-4 col-lg-6">
-                                                                        <label><%=t.getDescrizione()%></label><%=t.getObbligatorio() == 1 ? "<label class='kt-font-danger kt-font-boldest'>*</label>" : ""%>
+                                                                    <div class="form-group col-xl-4 col-lg-6" id="for_doc_<%=t.getId()%>">
+                                                                        <label><%=t.getDescrizione()%></label><%=t.getObbligatorio() == 1
+                                                                                ? "<label class='kt-font-danger kt-font-boldest'>*</label>" : ""%>
                                                                         <div class="custom-file">
-                                                                            <input type="file" <%=t.getObbligatorio() == 1 ? "tipo='obbligatory'" : ""%> class="custom-file-input" accept="application/pdf" name="doc_<%=t.getId()%>" id="doc_<%=t.getId()%>" onchange="return checkFileExtAndDim(['pdf']);">
+                                                                            <input type="file" <%=t.getObbligatorio() == 1 ? "tipo='obbligatory'" : ""%> 
+                                                                                   class="custom-file-input" accept="application/pdf" name="doc_<%=t.getId()%>" id="doc_<%=t.getId()%>" onchange="return checkFileExtAndDim(['pdf']);">
                                                                             <label class="custom-file-label selected" name="label_<%=t.getId()%>">Scegli File</label>
                                                                         </div>
                                                                     </div>
@@ -502,23 +505,23 @@
         <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script id="newAllievo" src="<%=src%>/page/sa/js/newAllievo.js" data-context="<%=request.getContextPath()%>" type="text/javascript"></script>
         <script type="text/javascript">
-                                                                                var KTAppOptions = {
-                                                                                    "colors": {
-                                                                                        "state": {
-                                                                                            "brand": "#5d78ff",
-                                                                                            "dark": "#282a3c",
-                                                                                            "light": "#ffffff",
-                                                                                            "primary": "#5867dd",
-                                                                                            "success": "#34bfa3",
-                                                                                            "info": "#36a3f7",
-                                                                                            "warning": "#ffb822"
-                                                                                        },
-                                                                                        "base": {
-                                                                                            "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                                                            "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                                                        }
-                                                                                    }
-                                                                                };
+                                                                                       var KTAppOptions = {
+                                                                                           "colors": {
+                                                                                               "state": {
+                                                                                                   "brand": "#5d78ff",
+                                                                                                   "dark": "#282a3c",
+                                                                                                   "light": "#ffffff",
+                                                                                                   "primary": "#5867dd",
+                                                                                                   "success": "#34bfa3",
+                                                                                                   "info": "#36a3f7",
+                                                                                                   "warning": "#ffb822"
+                                                                                               },
+                                                                                               "base": {
+                                                                                                   "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                                                                                   "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                                                                               }
+                                                                                           }
+                                                                                       };
         </script>
         <script>
             var datep = function () {

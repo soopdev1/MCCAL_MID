@@ -136,12 +136,18 @@ function impresaesistente() {
         $("#sedelegaleimpresa").attr("disabled", true);
         $("#sedelegaleimpresa").attr("placeholder", "Sede Legale");
         $("#sedelegaleimpresa").removeClass("is-invalid");
-        
+
         $("#sedeoperativaimpresa").attr("disabled", true);
-        $("#sedeoperativaimpresa").attr("placeholder", "Sede Legale");
+        $("#sedeoperativaimpresa").attr("placeholder", "Sede Operativa");
         $("#sedeoperativaimpresa").removeClass("is-invalid");
 
+        $('#for_doc_15').css("display", "none");
+        $('#doc_15').removeAttr("tipo");
+
+
     } else {
+        $('#classimpok').css("display", "none");
+
         $('.classimpok').css("display", "");
         $("#ruoloimpresa").removeAttr("disabled");
 
@@ -158,6 +164,11 @@ function impresaesistente() {
 
         $("#sedeoperativaimpresa").removeAttr("disabled");
         $("#sedeoperativaimpresa").removeAttr("placeholder");
+
+        $('#for_doc_15').css("display", "");
+        $('#doc_15').attr("tipo", "obbligatory");
+
+
     }
 }
 
