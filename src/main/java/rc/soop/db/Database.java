@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**
  *
@@ -77,13 +76,8 @@ public class Database {
             if (c != null) {
                 this.c.close();
             }
-        } catch (SQLException ex) {
-            System.err.println("METHOD: " + new Object() {
-            }
-                    .getClass()
-                    .getEnclosingMethod()
-                    .getName());
-            System.err.println("ERROR: " + ExceptionUtils.getStackTrace(ex));
+        } catch (Exception ex) {
+            log.severe(estraiEccezione(ex));
         }
     }
 
@@ -235,7 +229,7 @@ public class Database {
     }
 
     public String getPathtemp(String id) {
-        String p1 = "/mnt/mcalabria/over/gest/temp/";
+        String p1 = "/mnt/mcalabria/mid/gest/temp/";
         try {
             String sql = "SELECT url FROM path WHERE id = ?";
             try ( PreparedStatement ps = this.c.prepareStatement(sql)) {
@@ -447,19 +441,6 @@ public class Database {
             log.severe(estraiEccezione(ex));
         }
 
-        return out;
-    }
-
-    public boolean updateCIPMisto(int idpr, String cip_neet) {
-        boolean out = false;
-        try {
-            String upd = "UPDATE progetti_formativi SET cip_misto='" + cip_neet + "' WHERE idprogetti_formativi = " + idpr;
-            try ( Statement st = this.c.createStatement()) {
-                out = st.executeUpdate(upd) > 0;
-            }
-        } catch (Exception ex) {
-            log.severe(estraiEccezione(ex));
-        }
         return out;
     }
 

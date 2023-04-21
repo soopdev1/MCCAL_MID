@@ -402,9 +402,7 @@ public class ExportExcel {
                                         case 7:
                                             if (valid) {
                                                 pr.setOrestring(value);
-                                            } else {
-//                                                System.out.println(cell.getRowIndex() + " NON VALIDO " + value);
-                                            }
+                                            } 
                                             break;
                                         case 2:
 
@@ -563,14 +561,9 @@ public class ExportExcel {
                 writeCell(row, column, "x");
                 column++;
                 for (DocumentiPrg d : registri) {
-
-//                    d.getPresenti_list().forEach(p1 -> {
-//                        System.out.println(p1.toString());
-//                    });
                     Presenti presente = d.getPresenti_list().stream().filter(p1 -> Objects.equals(p1.getId(), a.getId())).findFirst().orElse(null);
                     somma += presente != null ? presente.getOre_riconosciute() : 0;
                     writeCell(row, column, presente != null ? String.valueOf(presente.getOre_riconosciute()) : "0");
-
                     column++;
                 }
                 writeCell(row, (column >= 17 ? column : 17), String.valueOf(somma));

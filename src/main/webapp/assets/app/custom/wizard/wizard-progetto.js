@@ -135,12 +135,12 @@ function checkStep2(wizardObj) {
         $('#allievisi option:selected').each(function () {
             var ateco = $(this).attr('ateco');
             if (startat === "") {
-                startat = ateco.substring(0, 5);
+                startat = ateco.substring(0, 3);
             } else {
-                if (startat !== ateco.substring(0, 5)) {
+                if (startat !== ateco.substring(0, 3)) {
                     err = true;
                     $('#allievisi_div').removeClass("is-valid-select").addClass("is-invalid-select");
-                    fastSwalShow("<h3>I codici ATECO degli allievi devono appartenere alla stessa classe (4 cifre).</h3>", "wobble");
+                    fastSwalShow("<h3>I codici ATECO degli allievi devono appartenere alla stessa divisione (2 cifre).</h3>", "wobble");
                 }
             }
         });

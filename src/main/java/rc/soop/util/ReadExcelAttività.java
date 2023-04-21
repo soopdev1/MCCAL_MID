@@ -52,14 +52,15 @@ public class ReadExcelAttività {
                         at.setLatitutdine(at.getComune().getCoordinate().getLatitudine() + (getRandomNumber(-20, 20) / 10000));
                         at.setLongitudine(at.getComune().getCoordinate().getLongitudine() + (getRandomNumber(-20, 20) / 10000));
                     } else {
-                        System.out.println(a.getIntestazione() + " " + a.getComune());
+                        e.insertTracking(null, a.getIntestazione() + " " + a.getComune());
                     }
-                e.persist(at);
+                    e.persist(at);
                 }
             }
             e.commit();
         } catch (Exception ex) {
             e.rollBack();
+            e.insertTracking(null, "att: " + Utility.estraiEccezione(ex));
             ex.printStackTrace();
         } finally {
             e.close();

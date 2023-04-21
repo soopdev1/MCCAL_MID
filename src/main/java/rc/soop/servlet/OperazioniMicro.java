@@ -230,26 +230,8 @@ public class OperazioniMicro extends HttpServlet {
             e.begin();
             ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, Long.valueOf(request.getParameter("id")));
             if (request.getParameter("cip") != null) {
-                String cip_neet = request.getParameter("cip").trim().replaceAll("\\s", "");
-                p.setCip(cip_neet);
-                if (p.isMisto()) {
-                    String cip_prof = request.getParameter("cip_misto").trim().replaceAll("\\s", "");
-//                    Database d1 = new Database(true);
-//                    int id_pro = d1.verificaCIP(cip_prof);
-//                    d1.closeDB();
-//                    if (id_pro > 0) {
-                    p.setCip_misto(cip_prof);
-//                        Database d2 = new Database(true);
-//                        check = d2.updateCIPMisto(id_pro, cip_neet);
-//                        d2.closeDB();
-//                        if (!check) {
-//                            resp.addProperty("message", "IL CIP INSERITO NON CORRISPONDE AD UN PROGETTO FORMATIVO VALIDO. RIPROVARE.");
-//                        }
-//                    } else {
-//                        check = false;
-//                        resp.addProperty("message", "IL CIP INSERITO NON CORRISPONDE AD UN PROGETTO FORMATIVO VALIDO. RIPROVARE.");
-//                    }
-                }
+                String cip1 = request.getParameter("cip").trim().replaceAll("\\s", "");
+                p.setCip(cip1);
             }
             if (check) {
 

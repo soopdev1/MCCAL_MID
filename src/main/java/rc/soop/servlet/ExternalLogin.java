@@ -88,7 +88,7 @@ public class ExternalLogin extends HttpServlet {
             e.close();
             
             // Request parameters and other properties.
-            List<NameValuePair> params = new ArrayList<NameValuePair>(2);
+            List<NameValuePair> params = new ArrayList<>(2);
             params.add(new BasicNameValuePair("type", "getUserToken"));
             params.add(new BasicNameValuePair("username", request.getParameter("username")));
             httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));

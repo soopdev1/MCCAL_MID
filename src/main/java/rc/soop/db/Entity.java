@@ -203,7 +203,6 @@ public class Entity {
         TypedQuery q = em.createNamedQuery("user.UsernamePwd", User.class);
         q.setParameter("username", user);
         q.setParameter("password", convMd5(pwd));
-
         return q.getResultList().isEmpty() ? null : (User) q.getSingleResult();
     }
 
@@ -257,7 +256,6 @@ public class Entity {
     public List<SoggettiAttuatori> getSoggettiAttuatori(String ragionesociale, String protocollo, String piva, String cf, String protocollare, String nome, String cognome) {
         HashMap<String, Object> param = new HashMap<>();
         String sql = "SELECT sa FROM SoggettiAttuatori sa ";
-
         if (!ragionesociale.equals("")) {
             sql += !sql.toUpperCase().contains("WHERE") ? "WHERE " : " AND ";
             sql += "sa.ragionesociale LIKE :ragionesociale";

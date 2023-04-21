@@ -68,7 +68,7 @@ public class Action {
     public static String linkFAD() {
         Database db = new Database();
         if (db.getC() == null) {
-            return "https://fad23.servizi.link/Login";
+            return "https://yisucal.servizi.link/MIDFad/Login";
         }
         String out = db.getPathtemp("linkfad");
         db.closeDB();

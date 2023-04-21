@@ -37,9 +37,7 @@
             e.close();
             
             for(DocumentiPrg d : documeti){
-                System.out.println(d.getGiorno()+" - "+d.getTipo().getModifiche_stati()+" -- "+p.getStato().getId()+" - - "+d.getValidate());
                 if(d.getGiorno() != null && Action.isModifiable(d.getTipo().getModifiche_stati(), p.getStato().getId())){//prendo solo i registri
-                    
                     registri.add(d);
                 }
             }
