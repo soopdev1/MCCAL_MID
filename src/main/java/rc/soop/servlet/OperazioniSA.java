@@ -683,7 +683,12 @@ public class OperazioniSA extends HttpServlet {
                     Long.valueOf(request.getParameter("idprogetto")));
             TipoDoc tipo = e.getEm().find(TipoDoc.class,
                     Long.valueOf(request.getParameter("id_tipo")));
-            List<TipoDoc> tipo_obb = e.getTipoDocObbl(prg.getStato());
+            
+            List<TipoDoc> tipo_obb = e.getTipoDocObbl(prg);
+            
+            
+            
+            
             List<DocumentiPrg> doc_list = e.getDocPrg(prg);
             User us = (User) request.getSession().getAttribute("user");
 
@@ -1034,7 +1039,7 @@ public class OperazioniSA extends HttpServlet {
             TipoDoc_Allievi tipo = e.getEm().find(TipoDoc_Allievi.class,
                     Long.valueOf("5"));
             List<TipoDoc_Allievi> tipo_obb = e.getTipoDocAllieviObbl(a.getProgetto().getStato());
-            List<TipoDoc> tipo_obb_prg = e.getTipoDocObbl(a.getProgetto().getStato());
+            List<TipoDoc> tipo_obb_prg = e.getTipoDocObbl(a.getProgetto());
             Documenti_Allievi doc_a = new Documenti_Allievi();
 
             Date giorno = request.getParameter("giorno") != null ? new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("giorno")) : null;
@@ -1159,7 +1164,7 @@ public class OperazioniSA extends HttpServlet {
             Documenti_Allievi doc = e.getEm().find(Documenti_Allievi.class,
                     Long.valueOf(request.getParameter("iddocumento")));
             List<Allievi> allieviprg = e.getAllieviProgettiFormativi(doc.getAllievo().getProgetto());
-            List<TipoDoc> tipo_obb_prg = e.getTipoDocObbl(doc.getAllievo().getProgetto().getStato());
+            List<TipoDoc> tipo_obb_prg = e.getTipoDocObbl(doc.getAllievo().getProgetto());
             //se è cambiato, scrivo il file su disco
             if (p != null && p.getSubmittedFileName() != null && p.getSubmittedFileName().length() > 0) {
                 p.write(doc.getPath());
@@ -1250,7 +1255,7 @@ public class OperazioniSA extends HttpServlet {
             TipoDoc_Allievi tipo = e.getEm().find(TipoDoc_Allievi.class,
                     Long.valueOf(request.getParameter("id_tipo")));
             List<TipoDoc_Allievi> tipo_obb = e.getTipoDocAllieviObbl(a.getProgetto().getStato());
-            List<TipoDoc> tipo_obb_prg = e.getTipoDocObbl(a.getProgetto().getStato());
+            List<TipoDoc> tipo_obb_prg = e.getTipoDocObbl(a.getProgetto());
             User us = (User) request.getSession().getAttribute("user");
 
             e.begin();
@@ -1493,7 +1498,7 @@ public class OperazioniSA extends HttpServlet {
             e.persist(doc);
             e.merge(prg);
             /* controllo se tutti i documenti sono stati caricati per poter mandare il progetto avanti */
-            List<TipoDoc> tipo_obb = e.getTipoDocObbl(prg.getStato());
+            List<TipoDoc> tipo_obb = e.getTipoDocObbl(prg);
             List<DocumentiPrg> doc_list = e.getDocPrg(prg);
 
             for (DocumentiPrg doc_prg : doc_list) {

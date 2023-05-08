@@ -1,6 +1,7 @@
 "use strict";
 // Class definition
 var min_allievi;
+var min_allievi_esistenti;
 var max_allievi;
 var max_allievi_esistenti;
 var KTWizard1 = function () {
@@ -77,7 +78,7 @@ var KTWizard1 = function () {
                 }
             });
         });
-    }
+    };
 
     return {
         init: function () {
@@ -105,23 +106,25 @@ function checkStep1(wizardObj) {
 }
 
 function checkStep2(wizardObj) {
-
     var nameall = "";
     var maxa;
+    var mina;
     if ($("#nome_pf").val() === "1") {
         nameall = "allievino";
         maxa = max_allievi;
+        mina = min_allievi;
     } else {
         maxa = max_allievi_esistenti;
+        mina = min_allievi_esistenti;
         nameall = "allievisi";
     }
 
     var err = false;
     err = checkObblFieldsContent($('#step2')) ? true : err;
-    if ($('#' + nameall).val().length < min_allievi) {//chek num max e min allievi
+    if ($('#' + nameall).val().length < mina) {//chek num max e min allievi
         err = true;
         $('#' + nameall + '_div').removeClass("is-valid-select").addClass("is-invalid-select");
-        fastSwalShow("<h3>Numero minimo di allievi non raggiunto.</h3>", "wobble");
+        fastSwalShow("<h3>Numero minimo di allievi ("+mina+") non raggiunto.</h3>", "wobble");
     } else if ($('#' + nameall).val().length > maxa) {
         err = true;
         $('#' + nameall + '_div').removeClass("is-valid-select").addClass("is-invalid-select");

@@ -332,18 +332,18 @@ public class Entity {
                 .setParameter("soggetto", sa);
         return q.getResultList().isEmpty() ? new ArrayList() : (List<Allievi>) q.getResultList();
     }
-    
+
     public List<Allievi> getAllieviSoggettoNoPrgNOIMPR(SoggettiAttuatori sa) {
         TypedQuery<Allievi> q = em.createNamedQuery("a.bySoggettoAttuatoreNoProgettonoimpr", Allievi.class)
                 .setParameter("soggetto", sa);
         return q.getResultList().isEmpty() ? new ArrayList() : (List<Allievi>) q.getResultList();
     }
+
     public List<Allievi> getAllieviSoggettoNoPrgSIIMPR(SoggettiAttuatori sa) {
         TypedQuery<Allievi> q = em.createNamedQuery("a.bySoggettoAttuatoreNoProgettosiimpr", Allievi.class)
                 .setParameter("soggetto", sa);
         return q.getResultList().isEmpty() ? new ArrayList() : (List<Allievi>) q.getResultList();
     }
-    
 
     public List<Allievi> getAllieviSA(String nome, String cognome, String cf, String stato, CPI cpi, SoggettiAttuatori sa) {
         HashMap<String, Object> param = new HashMap<>();
@@ -588,10 +588,40 @@ public class Entity {
         return !q.getResultList().isEmpty() ? (List<TipoDoc>) q.getResultList() : new ArrayList();
     }
 
-    public List<TipoDoc> getTipoDocObbl(StatiPrg stato) {
+    public List<TipoDoc> getTipoDoc_new(ProgettiFormativi progetto) {
+        TypedQuery q = this.em.createNamedQuery("t.byStato", TipoDoc.class)
+                .setParameter("stato", progetto.getStato());
+
+        List<TipoDoc> res = !q.getResultList().isEmpty() ? (List<TipoDoc>) q.getResultList() : new ArrayList();
+        if (progetto.getNome().getId().equals(2L)) { // IMPRESA ESISTENTE - RIMUOVE MODELLO 4 5 7
+            res.remove(this.em.find(TipoDoc.class,
+                    Long.valueOf("6")));
+            res.remove(this.em.find(TipoDoc.class,
+                    Long.valueOf("7")));
+            res.remove(this.em.find(TipoDoc.class,
+                    Long.valueOf("8")));
+        }
+
+        return res;
+
+    }
+
+    public List<TipoDoc> getTipoDocObbl(ProgettiFormativi progetto) {
+
         TypedQuery q = this.em.createNamedQuery("t.byStatoObbligatori", TipoDoc.class)
-                .setParameter("stato", stato);
-        return !q.getResultList().isEmpty() ? (List<TipoDoc>) q.getResultList() : new ArrayList();
+                .setParameter("stato", progetto.getStato());
+
+        List<TipoDoc> res = !q.getResultList().isEmpty() ? (List<TipoDoc>) q.getResultList() : new ArrayList();
+        if (progetto.getNome().getId().equals(2L)) { // IMPRESA ESISTENTE - RIMUOVE MODELLO 4 5 7
+            res.remove(this.em.find(TipoDoc.class,
+                    Long.valueOf("6")));
+            res.remove(this.em.find(TipoDoc.class,
+                    Long.valueOf("7")));
+            res.remove(this.em.find(TipoDoc.class,
+                    Long.valueOf("8")));
+        }
+
+        return res;
     }
 
     public List<DocumentiPrg> getDocPrg(ProgettiFormativi progetto) {

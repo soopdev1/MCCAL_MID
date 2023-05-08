@@ -475,7 +475,7 @@ public class OperazioniMicro extends HttpServlet {
         try {
             ProgettiFormativi prg = e.getEm().find(ProgettiFormativi.class, Long.valueOf(request.getParameter("idprogetto")));
             TipoDoc tipo = e.getEm().find(TipoDoc.class, Long.valueOf(request.getParameter("id_tipo")));
-            List<TipoDoc> tipo_obb = e.getTipoDocObbl(prg.getStato());
+            List<TipoDoc> tipo_obb = e.getTipoDocObbl(prg);
             tipo_obb.remove(tipo);
             for (DocumentiPrg d : prg.getDocumenti()) {
                 tipo_obb.remove(d.getTipo());
@@ -1174,9 +1174,12 @@ public class OperazioniMicro extends HttpServlet {
             }
 
             if (request.getParameter("fb") != null) {
-                Date fb = sdf.parse(request.getParameter("fb"));
-                p.setStart_fb(fb);
-                p.setEnd_fa(fb);
+                try {
+                    Date fb = sdf.parse(request.getParameter("fb"));
+                    p.setStart_fb(fb);
+                    p.setEnd_fa(fb);
+                } catch (Exception exx1) {
+                }
             }
             e.getEm().merge(p);
             e.persist(new Storico_Prg("Date del progetto modificate", new Date(), p, p.getStato()));

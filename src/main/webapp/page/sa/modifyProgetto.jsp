@@ -36,6 +36,7 @@
             int max_allievi = Integer.parseInt(e.getPath("max_alunni"));
             if (p.getNome().getId() == 2L) {
                 max_allievi = Integer.parseInt(e.getPath("max_alunni_esistenti"));
+                n_allievi = Integer.parseInt(e.getPath("min_allievi_esistenti"));
             }
             e.close();
 %>
@@ -274,7 +275,7 @@
                 if ($('#allievi').val().length < min_allievi || $('#allievi').val().length > max_allievi) {//chek num max e min allievi
                     err = true;
                     $('#allievi_div').removeClass("is-valid-select").addClass("is-invalid-select");
-                    fastSwalShow("<h3>Numero minimo di allievi non raggiunto</h3>", "wobble");
+                    fastSwalShow("<h3>Numero di allievi errato</h3>", "wobble");
                 }
                 return err;
             }

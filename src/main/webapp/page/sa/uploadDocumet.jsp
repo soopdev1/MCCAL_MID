@@ -31,7 +31,7 @@
             String src = session.getAttribute("src").toString();
             Entity e = new Entity();
             ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, Long.parseLong(request.getParameter("id")));
-            List<TipoDoc> tipo_doc_obbl = e.getTipoDoc(p.getStato());
+            List<TipoDoc> tipo_doc_obbl = e.getTipoDoc_new(p);
             List<DocumentiPrg> documeti = e.getDocPrg(p);
             List<DocumentiPrg> registri = new ArrayList<>();
             e.close();

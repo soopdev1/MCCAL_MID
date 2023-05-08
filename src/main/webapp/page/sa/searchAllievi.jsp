@@ -200,8 +200,7 @@
                                                         <th class="text-uppercase text-center">Residenza</th>
                                                         <th class="text-uppercase text-center">Domicilio</th>
                                                         <th class="text-uppercase text-center">Impresa esistente</th>
-                                                        <th class="text-uppercase text-center">Iscrizione a GG</th>
-                                                        <th class="text-uppercase text-center">CPI</th>
+                                                        <th class="text-uppercase text-center">Data Richiesta Iscrizione</th>
                                                         <th class="text-uppercase text-center">Stato</th>
                                                         <th class="text-uppercase text-center">N. Protocollo</th>
                                                         <th class="text-uppercase text-center">Documento d'Identità</th>

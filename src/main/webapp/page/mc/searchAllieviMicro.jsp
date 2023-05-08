@@ -209,8 +209,7 @@
                                                         <th class="text-uppercase text-center">Data Nascita</th>
                                                         <th class="text-uppercase text-center">Residenza</th>
                                                         <th class="text-uppercase text-center">Domicilio</th>
-                                                        <th class="text-uppercase text-center">Data Iscrizione G.G.</th>
-                                                        <th class="text-uppercase text-center">C.P.I.</th>
+                                                        <th class="text-uppercase text-center">Data Richiesta Iscrizione</th>
                                                         <th class="text-uppercase text-center">Protocollo</th>
                                                         <th class="text-uppercase text-center">Ore Fase A</th>
                                                         <th class="text-uppercase text-center">Ore Fase B</th>
@@ -298,19 +297,6 @@
                     var table = $('#kt_table_1');
                     table.DataTable({
                         dom: `<'row'<'col-sm-12'ftr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-//                        dom: "<'row'<'col-sm-6'B><'col-sm-6'ft>>" +
-//                                "t" +
-//                                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>",
-//                        buttons: [{
-//                                extend: 'excel',
-//                                className: 'btn btn-excel',
-//                                text: '<i class="fa fa-file-excel"></i>Esporta Excel',
-//                                title: 'Allievi_' + formattedDate(new Date()),
-//                                exportOptions: {
-//                                    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-//                                }
-//                            },
-//                        ],
                         lengthMenu: [5, 10, 25, 50],
                         language: {
                             'lengthMenu': 'Mostra _MENU_',
@@ -341,7 +327,6 @@
                             {data: 'indirizzoresidenza'},
                             {data: 'indirizzodomicilio'},
                             {data: 'iscrizionegg'},
-                            {data: 'cpi.descrizione'},
                             {data: 'protocollo'},
                             {data: 'ore_fa'},
                             {data: 'ore_fb'},
@@ -417,7 +402,7 @@
                                     return comune + ",<br> " + row.indirizzodomicilio + " " + row.civicodomicilio;
                                 }
                             }, {
-                                targets: 8,
+                                targets: 7,
                                 type: 'date-it',
                                 render: function (data, type, row, meta) {
                                     if (row.pregresso) {
@@ -427,7 +412,7 @@
                                     }
                                 }
                             }, {
-                                targets: 13,
+                                targets: 12,
                                 className: 'text-center',
                                 orderable: false,
                                 render: function (data, type, row, meta) {

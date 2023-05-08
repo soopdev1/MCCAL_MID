@@ -36,6 +36,7 @@
             List<TipoDoc> tipo_doc = e.getTipoDoc(e.getEm().find(StatiPrg.class, "S"));
             sedi = sedi == null ? new ArrayList() : sedi;
             int n_allievi = Integer.parseInt(e.getPath("min_allievi"));
+            int n_allievi_esistenti = Integer.parseInt(e.getPath("min_allievi_esistenti"));
             int max_allievi = Integer.parseInt(e.getPath("max_alunni"));
             int max_allievi_esistenti = Integer.parseInt(e.getPath("max_alunni_esistenti"));
             e.close();
@@ -258,9 +259,7 @@
                                                                                 </select>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="form-group row" id="knowlege_channel">
-
-                                                                        </div>
+                                                                        <div class="form-group row" id="knowlege_channel"></div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -429,6 +428,7 @@
             });
 
             min_allievi = <%=n_allievi%>;
+            min_allievi_esistenti = <%=n_allievi_esistenti%>;
             max_allievi = <%=max_allievi%>;
             max_allievi_esistenti = <%=max_allievi_esistenti%>;
 
@@ -437,6 +437,7 @@
             <%}%>
 
             $("#nome_pf").change(function (e) {
+                $('#knowlege_channel').empty();
                 $("#label_titolo").html("<b>" + $("#" + this.id + " option[value='" + $(this).val() + "']").text() + "</b>");
                 if($(this).val() === '1'){
                     $("#div_allievisi").css("display", "none");

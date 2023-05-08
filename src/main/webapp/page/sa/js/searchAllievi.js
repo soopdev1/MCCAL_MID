@@ -73,18 +73,17 @@ var KTDatatablesDataSourceAjaxServer = function () {
                     render: function (data, type, row) {
                         return moment(row.iscrizionegg).format("DD/MM/YYYY");
                     }},
-                {data: 'cpi.descrizione'},
                 {data: 'stato',
                     className: 'text-center',
                     render: function (data, type, row) {
-                        if (row.stato == 'A') {
+                        if (row.stato === 'A') {
                             return 'Attivo';
-                        } else if (row.stato == 'D')
+                        } else if (row.stato === 'D')
                             return 'Disattivo';
                     }
                 },
                 {data: 'protocollo', className: 'text-center'},
-                {defaultContent: ''},
+                {defaultContent: ''}
             ],
             drawCallback: function () {
                 $('[data-toggle="kt-tooltip"]').tooltip();
@@ -110,7 +109,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
                                     '<i class="fa fa-exclamation" style="color:#b30000"></i><i class="fa fa-id-card" style="color:#b30000"></i> Carica nuovo documento d\'identità</a>';
                         }
                         option += '<a class="dropdown-item fancyBoxAntoRef" href="' + context + '/redirect.jsp?page=page/sa/updtAllievo.jsp?id=' + row.id + '"><i class="fa fa-user-edit"></i> Scheda Allievo</a>'
-                        if (row.progetto != null) {
+                        if (row.progetto !== null) {
                             prg1.set(row.progetto.id, row.progetto);
                             option += '<a class="dropdown-item" href="javascript:void(0);" onclick="swalTableProgFormativo(' + row.progetto.id + ')"><i class="fa fa-file-alt"></i> Visualizza Progetto Formativo</a>'
                         }
@@ -119,20 +118,20 @@ var KTDatatablesDataSourceAjaxServer = function () {
                     }
                 },
                 {
-                    targets: 9,
-                    orderable: false,
+                    targets: 8,
+                    orderable: false
                 }, {
-                    targets: 11,
+                    targets: 10,
                     className: 'text-center',
                     orderable: false,
                     render: function (data, type, row, meta) {
                         var option = '<a href="' + context + '/OperazioniGeneral?type=showDoc&path=' + row.docid + '" class="btn btn-io fa fa-address-card fancyDocument" style="font-size: 20px;"'
                                 + 'data-container="body" data-html="true" data-toggle="kt-tooltip"'
-                                + 'data-placement="top" title="<h6>Scadenza:</h6><h5>' + formattedDate(new Date(row.scadenzadocid)) + '</h5>"></a>'
+                                + 'data-placement="top" title="<h6>Scadenza:</h6><h5>' + formattedDate(new Date(row.scadenzadocid)) + '</h5>"></a>';
                         if (new Date(row.scadenzadocid) <= new Date()) {
                             option = '<a href="' + context + '/OperazioniGeneral?type=showDoc&path=' + row.docid + '" class="btn btn-io-n fancyDocument" style="font-size: 20px"'
                                     + 'data-container="body" data-html="true" data-toggle="kt-tooltip"'
-                                    + 'data-placement="top" title="<h6>Scadenza:</h6><h5>' + formattedDate(new Date(row.scadenzadocid)) + '</h5>">&nbsp;<i class="fa fa-exclamation-triangle"></i></a>'
+                                    + 'data-placement="top" title="<h6>Scadenza:</h6><h5>' + formattedDate(new Date(row.scadenzadocid)) + '</h5>">&nbsp;<i class="fa fa-exclamation-triangle"></i></a>';
                         }
                         return option;
                     }
