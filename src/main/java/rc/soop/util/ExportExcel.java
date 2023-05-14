@@ -284,7 +284,10 @@ public class ExportExcel {
                     writeCell(row, a.getCondizione_mercato().getId());
                     writeCell(row, sdf.format(a.getData_up()));
                     writeCell(row, sdf.format(a.getIscrizionegg()));
-                    writeCell(row, a.getCpi().getDescrizione());
+                    
+                    String imp = a.isImpresaesistente() ? "SI" : "NO";
+                    writeCell(row, imp);
+                    
                     writeCell(row, String.valueOf(calcolaEta(a.getDatanascita())));
                     writeCell(row, p.getSoggetto().getRagionesociale());
                     writeCell(row, p.getCip());

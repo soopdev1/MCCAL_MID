@@ -143,7 +143,8 @@ function checkStep2(wizardObj) {
                 if (startat !== ateco.substring(0, 3)) {
                     err = true;
                     $('#allievisi_div').removeClass("is-valid-select").addClass("is-invalid-select");
-                    fastSwalShow("<h3>I codici ATECO degli allievi devono appartenere alla stessa divisione (2 cifre).</h3>", "wobble");
+                    fastSwalShow("<h3>I codici ATECO degli allievi devono appartenere alla stessa divisione ATECO (le prime due cifre devono essere uguali).</h3>",
+                    "wobble");
                 }
             }
         });

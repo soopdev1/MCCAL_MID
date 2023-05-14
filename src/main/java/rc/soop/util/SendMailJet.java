@@ -345,10 +345,18 @@ public class SendMailJet {
                 case "FA":
                     testostart = "Si informa che l'Ufficio Yes I Start Up Calabria ha provveduto a modificare lo stato del progetto formativo CIP " + p.getCip() + " in " + p.getStato().getDescrizione().toUpperCase() + ".";
                     break;
-                case "C":
-                    testostart = "Si informa che l'Ufficio Yes I Start Up Calabria ha provveduto a modificare lo stato del progetto formativo CIP " + p.getCip()
-                            + " da FASE B a CHIUSO. Si invita a voler procedere con il caricamento della documentazione del corso.";
+                case "C": {
+                    if (p.getNome().getId().equals(2L)) { // IMPRESA ESISTENTE - PASSA IN CHIUSO DIRETTAMENTE DALLA FASE A
+                        testostart = "Si informa che l'Ufficio Yes I Start Up Calabria ha provveduto a modificare lo stato del progetto formativo CIP " 
+                                + p.getCip()
+                                + " da FASE A a CHIUSO. Si invita a voler procedere con il caricamento della documentazione del corso.";
+                    } else {
+                        testostart = "Si informa che l'Ufficio Yes I Start Up Calabria ha provveduto a modificare lo stato del progetto formativo CIP " 
+                                + p.getCip()
+                                + " da FASE B a CHIUSO. Si invita a voler procedere con il caricamento della documentazione del corso.";
+                    }
                     break;
+                }
                 default:
                     testostart = "";
                     break;

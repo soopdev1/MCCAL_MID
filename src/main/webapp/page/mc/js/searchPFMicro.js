@@ -86,21 +86,21 @@ var KTDatatablesDataSourceAjaxServer = function () {
                             option += '<a class="dropdown-item fancyBoxAntoRef" href="checkList2.jsp?id=' + row.id + '" ><i class="fa fa-file-excel"></i> Compila Checklist 2</a>';
                             option += '<a class="dropdown-item fancyBoxAntoRef" href="uploadCL.jsp?id=' + row.id + '" ><i class="fa fa-file-upload"></i> Modifica/Carica Checklist</a>';
                         }
-                        
+
                         if (row.stato.id === "FA") {
                             option += '<a class="dropdown-item fancyBoxAntoRef" href="uploadCL.jsp?id=' + row.id + '" ><i class="fa fa-file-upload"></i> Modifica/Carica Documenti</a>';
                         }
-                        
+
                         if (row.stato.controllare === 1) {
                             option += '<a class="dropdown-item kt-font-success" href="javascript:void(0);" onclick="valitdatePrg(' + row.id
                                     + ',&quot;' + row.stato.id + '&quot;,&quot;' + row.misto + '&quot;)"><i class="fa fa-check kt-font-success" style="margin-top:-2px"></i>Convalida Progetto</a>';
                             option += '<a class="dropdown-item kt-font-danger" href="javascript:void(0);" onclick="rejectPrg(' + row.id + ')"><i class="flaticon2-delete kt-font-danger" style="margin-top:-2px"></i>Segnala Progetto</a>';
                         }
-                        
+
                         if (row.archiviabile === 1) {
                             option += '<a class="dropdown-item kt-font-success" href="javascript:void(0);" onclick="confirmNext(' + row.id + ',\'' + row.stato.id + '\')">Archivia Progetto&nbsp;<i class="fa fa-angle-double-right kt-font-success" style="margin-top:-2px"></i></a>';
                         }
-                        
+
                         if (row.stato.id === "AR") {
                             option += '<a class="dropdown-item" href="javascript:void(0);" onclick="downloadArchive(' + row.id + ',\'' + row.cip + '\')"><i class="fa fa-file-archive" style="margin-top:-2px"></i> Scarica Pacchetto Files</a>';
                             if (row.rendicontato === 0) {
@@ -930,7 +930,7 @@ function showRegistroAula(id, control, idprogetto) {
 }
 
 function confirmNext(id, stato) {
-    var msg = "Sicuro di voler archivaire questo progetto formativo?"
+    var msg = "Sicuro di voler archiviare questo progetto formativo?"
             + "<br><br> Archiviando il progetto potrà essere scaricato il pacchetto con tutti i files da inviare in regione.";
 
     swal.fire({
@@ -1144,7 +1144,7 @@ function liquida_old(id) {
         title: '<h2 class="kt-font-io-n"><b>Liquida Progetto</b></h2><br>',
         html: html,
         animation: false,
-        width:'50%',
+        width: '50%',
         showCancelButton: true,
         confirmButtonText: '&nbsp;<i class="la la-check"></i>',
         cancelButtonText: '&nbsp;<i class="la la-close"></i>',
