@@ -262,7 +262,7 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group col-xl-3 col-lg-6">
-                                                                            <label>Condizione di Mercato </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                            <label>Condizione di Mercato&nbsp;&nbsp;<i class="fa fa-info-circle" data-container="body" data-html="true" data-toggle="kt-tooltip" title="Per i partecipanti afferenti ad impresa ESISTENTE viene impostato in automatico il valore OCCUPATO"></i> </label><label class="kt-font-danger kt-font-boldest">*</label> 
                                                                             <div class="dropdown bootstrap-select form-control kt-" id="condizione_div" style="padding: 0;">
                                                                                 <select class="form-control kt-select2-general obbligatory" id="condizione" name="condizione"  style="width: 100%">
                                                                                     <option value="-">Seleziona condizione di mercato</option>

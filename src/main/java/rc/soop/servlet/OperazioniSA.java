@@ -168,7 +168,7 @@ public class OperazioniSA extends HttpServlet {
         try {
 
             List<Documenti_Allievi> documenti = new ArrayList<>();
-            List<TipoDoc_Allievi> tipo_doc = e.getTipoDocAllievi(e.getEm().find(StatiPrg.class, "S"));
+            List<TipoDoc_Allievi> tipo_doc = e.getTipoDocAllieviSTART(e.getEm().find(StatiPrg.class, "S"));
 
             String codicefiscale = request.getParameter("codicefiscale");
             if (e.getAllievoCF(codicefiscale) == null) {
@@ -221,7 +221,6 @@ public class OperazioniSA extends HttpServlet {
                 a.setTitoloStudio((TitoliStudio) e.getEm().find(TitoliStudio.class, request.getParameter("titolo_studio")));
                 a.setSoggetto((SoggettiAttuatori) us.getSoggettoAttuatore());
                 a.setCpi((CPI) e.getEm().find(CPI.class, request.getParameter("cpi")));
-                a.setCondizione_mercato((Condizione_Mercato) e.getEm().find(Condizione_Mercato.class, request.getParameter("condizione")));
                 a.setDatacpi(sdf.parse(request.getParameter("datacpi")));
                 //29-04-2020 MODIFICA - CONDIZIONE LAVORATIVA PRECEDENTE
                 a.setCondizione_lavorativa((Condizione_Lavorativa) e.getEm().find(Condizione_Lavorativa.class, Integer.valueOf(request.getParameter("condizione_lavorativa"))));
@@ -244,6 +243,7 @@ public class OperazioniSA extends HttpServlet {
                     } else {
                         a.setSedeoperativaimpresa(new String(request.getParameter("sedeoperativaimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
                     }
+                    a.setCondizione_mercato((Condizione_Mercato) e.getEm().find(Condizione_Mercato.class, "00"));
                 } else { //TUTTO NULL
                     a.setImpresaesistente(false);
                     a.setRuoloimpresa(null);
@@ -252,8 +252,8 @@ public class OperazioniSA extends HttpServlet {
                     a.setAtecoimpresa(null);
                     a.setSedeimpresa(null);
                     a.setSedeoperativaimpresa(null);
+                    a.setCondizione_mercato((Condizione_Mercato) e.getEm().find(Condizione_Mercato.class, request.getParameter("condizione")));
                 }
-
                 e.begin();
                 e.persist(a);
                 for (TipoDoc_Allievi t : tipo_doc) {
@@ -340,7 +340,6 @@ public class OperazioniSA extends HttpServlet {
                 a.setIscrizionegg(sdf.parse(request.getParameter("iscrizionegg")));
                 a.setTitoloStudio((TitoliStudio) e.getEm().find(TitoliStudio.class, request.getParameter("titolo_studio")));
                 a.setCpi((CPI) e.getEm().find(CPI.class, request.getParameter("cpi")));
-                a.setCondizione_mercato((Condizione_Mercato) e.getEm().find(Condizione_Mercato.class, request.getParameter("condizione")));
                 a.setDatacpi(sdf.parse(request.getParameter("datacpi")));
                 //29-04-2020 MODIFICA - CONDIZIONE LAVORATIVA PRECEDENTE
                 a.setCondizione_lavorativa((Condizione_Lavorativa) e.getEm().find(Condizione_Lavorativa.class, Integer.valueOf(request.getParameter("condizione_lavorativa"))));
@@ -360,6 +359,7 @@ public class OperazioniSA extends HttpServlet {
                     } else {
                         a.setSedeoperativaimpresa(new String(request.getParameter("sedeoperativaimpresa").getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
                     }
+                    a.setCondizione_mercato((Condizione_Mercato) e.getEm().find(Condizione_Mercato.class, "00"));
                 } else { //TUTTO NULL
                     a.setImpresaesistente(false);
                     a.setRuoloimpresa(null);
@@ -367,6 +367,7 @@ public class OperazioniSA extends HttpServlet {
                     a.setPivaimpresa(null);
                     a.setAtecoimpresa(null);
                     a.setSedeimpresa(null);
+                    a.setCondizione_mercato((Condizione_Mercato) e.getEm().find(Condizione_Mercato.class, request.getParameter("condizione")));                
                 }
 
                 e.merge(a);
@@ -683,12 +684,9 @@ public class OperazioniSA extends HttpServlet {
                     Long.valueOf(request.getParameter("idprogetto")));
             TipoDoc tipo = e.getEm().find(TipoDoc.class,
                     Long.valueOf(request.getParameter("id_tipo")));
-            
+
             List<TipoDoc> tipo_obb = e.getTipoDocObbl(prg);
-            
-            
-            
-            
+
             List<DocumentiPrg> doc_list = e.getDocPrg(prg);
             User us = (User) request.getSession().getAttribute("user");
 
@@ -716,7 +714,7 @@ public class OperazioniSA extends HttpServlet {
             }
             //se caricato tutti i doc obbligatori setto il progetto come idoneo per la prossima fase
             if (prg.getStato().getId().equals("FB")) {
-                List<TipoDoc_Allievi> tipo_obb_all = e.getTipoDocAllieviObbl(prg.getStato());
+                List<TipoDoc_Allievi> tipo_obb_all = e.getTipoDocAllieviObbl(prg);
                 List<TipoDoc_Allievi> doc_allievo;
                 StringBuilder msg = new StringBuilder();
                 StringBuilder warning = new StringBuilder();
@@ -1038,7 +1036,7 @@ public class OperazioniSA extends HttpServlet {
                     Long.valueOf(request.getParameter("idallievo")));
             TipoDoc_Allievi tipo = e.getEm().find(TipoDoc_Allievi.class,
                     Long.valueOf("5"));
-            List<TipoDoc_Allievi> tipo_obb = e.getTipoDocAllieviObbl(a.getProgetto().getStato());
+            List<TipoDoc_Allievi> tipo_obb = e.getTipoDocAllieviObbl(a.getProgetto());
             List<TipoDoc> tipo_obb_prg = e.getTipoDocObbl(a.getProgetto());
             Documenti_Allievi doc_a = new Documenti_Allievi();
 
@@ -1190,8 +1188,7 @@ public class OperazioniSA extends HttpServlet {
             warning.append("Tuttavia, i seguenti allievi non hanno effettuato le ore necessarie per la Fase B:<br>");
             for (Allievi allievo : allieviprg) {
                 if (allievo.getEsito().equalsIgnoreCase("Fase B")) {
-                    doc_allievo = e.getTipoDocAllievi(allievo.getProgetto().getStato());
-                    //List<TipoDoc_Allievi> tipo_obb = e.getTipoDocAllieviObbl(a.getProgetto().getStato());
+                    doc_allievo = e.getTipoDocAllievi(allievo.getProgetto());
                     totale = 0;
                     for (Documenti_Allievi doc_a : allievo.getDocumenti()) {
                         if (doc_a.getTipo().getId() == 5 && doc_a.getDeleted() == 0) {
@@ -1254,7 +1251,7 @@ public class OperazioniSA extends HttpServlet {
             //ProgettiFormativi prg = a.getProgetto();
             TipoDoc_Allievi tipo = e.getEm().find(TipoDoc_Allievi.class,
                     Long.valueOf(request.getParameter("id_tipo")));
-            List<TipoDoc_Allievi> tipo_obb = e.getTipoDocAllieviObbl(a.getProgetto().getStato());
+            List<TipoDoc_Allievi> tipo_obb = e.getTipoDocAllieviObbl(a.getProgetto());
             List<TipoDoc> tipo_obb_prg = e.getTipoDocObbl(a.getProgetto());
             User us = (User) request.getSession().getAttribute("user");
 

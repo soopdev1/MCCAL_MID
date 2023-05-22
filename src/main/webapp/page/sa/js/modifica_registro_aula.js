@@ -7,7 +7,7 @@ var context = document.getElementById("restristro_aula").getAttribute("data-cont
 
 var offset = moment().utcOffset()*60*1000;
 
-if(new Date().getHours() - new Date().getUTCHours()==2){//tolgo 1 ora per compensare ora legale
+if(new Date().getHours() - new Date().getUTCHours()===2){//tolgo 1 ora per compensare ora legale
     offset=offset-(60*1000);
 }
 

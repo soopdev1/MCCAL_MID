@@ -840,8 +840,6 @@ function setValueStato(id, sigma) {
 }
 
 function showRegistroAula(id, var2, var3) {
-    alert(var2);
-    alert(var3);
     var registro = registri_aula.get(id);
     var doc = getHtml("doc_registro_aula", context);
     var presenze = getHtml("div_presenza", context);

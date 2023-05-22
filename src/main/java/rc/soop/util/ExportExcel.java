@@ -232,7 +232,6 @@ public class ExportExcel {
         double euro_ore_esistenti = Double.parseDouble(e.getPath("euro_ore_esistenti"));
         File template = new File(e.getPath("template_excel"));
         String output_name = e.getPath("output_excel_archive") + "export_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".xlsx";
-        e.close();
         try {
 
             File out_file = new File(output_name);
@@ -284,10 +283,10 @@ public class ExportExcel {
                     writeCell(row, a.getCondizione_mercato().getId());
                     writeCell(row, sdf.format(a.getData_up()));
                     writeCell(row, sdf.format(a.getIscrizionegg()));
-                    
+
                     String imp = a.isImpresaesistente() ? "SI" : "NO";
                     writeCell(row, imp);
-                    
+
                     writeCell(row, String.valueOf(calcolaEta(a.getDatanascita())));
                     writeCell(row, p.getSoggetto().getRagionesociale());
                     writeCell(row, p.getCip());
@@ -305,7 +304,9 @@ public class ExportExcel {
                     writeCell(row, calcoladurata(ore_b));
 
                     writeCell(row, String.valueOf(ore_tot_int));
-                    writeCell(row, a.getSelfiemployement().getDescrizione());
+                    
+                    writeCell(row, a.getSelfiemployement() == null ? "" : a.getSelfiemployement().getDescrizione());
+                    
                     writeCell(row, a.getStatopartecipazione().getId());
                     writeCell(row, a.getId().toString());
                     writeCell(row, a.getEsito().equals("Fase B") ? "A+B" : "A");
@@ -327,10 +328,14 @@ public class ExportExcel {
                 }
                 workbook.write(out);
             }
+            e.close();
             return output_name;
         } catch (Exception ex) {
+            Utility.log.severe(Utility.estraiEccezione(ex));
             e.insertTracking(null, "ExportExcel createExcelAllievi: " + Utility.estraiEccezione(ex));
         }
+        e.close();
+
         return "";
     }
 
@@ -405,7 +410,7 @@ public class ExportExcel {
                                         case 7:
                                             if (valid) {
                                                 pr.setOrestring(value);
-                                            } 
+                                            }
                                             break;
                                         case 2:
 

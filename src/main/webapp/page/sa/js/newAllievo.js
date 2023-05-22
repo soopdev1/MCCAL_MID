@@ -144,7 +144,6 @@ function impresaesistente() {
         $('#for_doc_15').css("display", "none");
         $('#doc_15').removeAttr("tipo");
 
-
     } else {
         $('#classimpok').css("display", "none");
 

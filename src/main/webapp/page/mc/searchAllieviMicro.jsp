@@ -202,15 +202,15 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="text-uppercase text-center">Azioni</th>
-                                                        <th class="text-uppercase text-center">Nome</th>
-                                                        <th class="text-uppercase text-center">Cognome</th>
+                                                        <th class="text-uppercase text-center">Allievo</th>
                                                         <th class="text-uppercase text-center">Codice Fiscale</th>
-                                                        <th class="text-uppercase text-center">Titolo Di Studio</th>
                                                         <th class="text-uppercase text-center">Data Nascita</th>
                                                         <th class="text-uppercase text-center">Residenza</th>
                                                         <th class="text-uppercase text-center">Domicilio</th>
+                                                        <th class="text-uppercase text-center">Impresa esistente</th>
                                                         <th class="text-uppercase text-center">Data Richiesta Iscrizione</th>
-                                                        <th class="text-uppercase text-center">Protocollo</th>
+                                                        <th class="text-uppercase text-center">Stato</th>
+                                                        <th class="text-uppercase text-center">N. Protocollo</th>
                                                         <th class="text-uppercase text-center">Ore Fase A</th>
                                                         <th class="text-uppercase text-center">Ore Fase B</th>
                                                         <th class="text-uppercase text-center">Documento Id.</th>
@@ -319,16 +319,56 @@
                         order: [],
                         columns: [
                             {defaultContent: ''},
-                            {data: 'nome'},
-                            {data: 'cognome'},
-                            {data: 'codicefiscale'},
-                            {data: 'titoloStudio.descrizione'},
-                            {data: 'datanascita'},
-                            {data: 'indirizzoresidenza'},
-                            {data: 'indirizzodomicilio'},
-                            {data: 'iscrizionegg'},
-                            {data: 'protocollo'},
-                            {data: 'ore_fa'},
+                            {data: 'allievo',
+                                className: 'text-center',
+                                render: function (data, type, row) {
+                                    return row.nome + ' ' + row.cognome;
+                                }},
+                            {data: 'codicefiscale', className: 'text-center'},
+                            {data: 'datanascita',
+                                className: 'text-center',
+                                type: 'date-it',
+                                render: function (data, type, row) {
+                                    return moment(row.datanascita).format("DD/MM/YYYY");
+                                }},
+                            {data: 'residenza',
+                                className: 'text-center',
+                                render: function (data, type, row) {
+                                    return row.comune_residenza.nome + ' (' + row.comune_residenza.provincia + '),<br>' + row.indirizzoresidenza + ' ' + row.civicoresidenza;
+                                }},
+                            {data: 'domicilio',
+                                className: 'text-center',
+                                render: function (data, type, row) {
+                                    return row.comune_domicilio.nome + ' (' + row.comune_domicilio.provincia + '),<br>' + row.indirizzodomicilio + ' ' + row.civicodomicilio;
+                                }
+                            },
+                            {data: 'impresaesistente',
+                                className: 'text-center',
+                                type: 'date-it',
+                                render: function (data, type, row) {
+                                    if (row.impresaesistente) {
+                                        return "SI - " + row.ragionesocialeimpresa;
+                                    } else {
+                                        return "NO";
+                                    }
+                                }},
+                            {data: 'iscrizionegg',
+                                className: 'text-center',
+                                type: 'date-it',
+                                render: function (data, type, row) {
+                                    return moment(row.iscrizionegg).format("DD/MM/YYYY");
+                                }},
+                            {data: 'stato',
+                                className: 'text-center',
+                                render: function (data, type, row) {
+                                    if (row.stato === 'A') {
+                                        return 'Attivo';
+                                    } else if (row.stato === 'D')
+                                        return 'Disattivo';
+                                }
+                            },
+                            {data: 'protocollo', className: 'text-center'},
+                            {data: 'ore_fa', className: 'text-center'},
                             {data: 'ore_fb'},
                             {defaultContent: ''}
                         ],
@@ -541,7 +581,7 @@
                     }
                 });
             }
-            
+
             //NOTE 16-08-2021
             function getNoteAllievo(idallievo) {
                 var notes = "";

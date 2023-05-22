@@ -39,7 +39,7 @@
 
             List<Condizione_Mercato> condizione = e.findAll(Condizione_Mercato.class);
             List<Condizione_Lavorativa> condlavprec = e.findAll(Condizione_Lavorativa.class);
-            List<TipoDoc_Allievi> tipo_doc = e.getTipoDocAllievi(e.getEm().find(StatiPrg.class, "S"));
+            List<TipoDoc_Allievi> tipo_doc = e.getTipoDocAllieviSTART(e.getEm().find(StatiPrg.class, "S"));
             e.close();
             boolean fancy = request.getParameter("fb") != null && request.getParameter("fb").equals("1") ? false : true;
 %>
@@ -247,7 +247,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group col-xl-4 col-lg-6">
-                                                                        <label>Condizione di Mercato </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                        <label>Condizione di Mercato&nbsp;&nbsp;<i class="fa fa-info-circle" data-container="body" data-html="true" data-toggle="kt-tooltip" title="Per i partecipanti afferenti ad impresa ESISTENTE viene impostato in automatico il valore OCCUPATO"></i> </label><label class="kt-font-danger kt-font-boldest">*</label> 
                                                                         <div class="dropdown bootstrap-select form-control kt-" id="condizione_div" style="padding: 0;">
                                                                             <select class="form-control kt-select2-general obbligatory" id="condizione" name="condizione"  style="width: 100%">
                                                                                 <option value="-">Seleziona condizione di mercato</option>
@@ -528,7 +528,7 @@
                 var arrows = {
                     leftArrow: '<i class="la la-angle-left"></i>',
                     rightArrow: '<i class="la la-angle-right"></i>'
-                }
+                };
                 var demos = function () {
                     $('input.dateBorth').datepicker({
                         orientation: "bottom left",
@@ -537,11 +537,9 @@
                         autoclose: true,
                         format: 'dd/mm/yyyy',
                         startView: 'decade',
-                        endDate: new Date(),
+                        endDate: new Date()
                     });
-
-                }
-
+                };
                 return {
                     // public functions
                     init: function () {
@@ -549,7 +547,6 @@
                     }
                 };
             }();
-
             jQuery(document).ready(function () {
                 datep.init();
             });

@@ -593,13 +593,22 @@ public class Entity {
                 .setParameter("stato", progetto.getStato());
 
         List<TipoDoc> res = !q.getResultList().isEmpty() ? (List<TipoDoc>) q.getResultList() : new ArrayList();
-        if (progetto.getNome().getId().equals(2L)) { // IMPRESA ESISTENTE - RIMUOVE MODELLO 4 5 7
-            res.remove(this.em.find(TipoDoc.class,
-                    Long.valueOf("6")));
-            res.remove(this.em.find(TipoDoc.class,
-                    Long.valueOf("7")));
-            res.remove(this.em.find(TipoDoc.class,
-                    Long.valueOf("8")));
+        if (progetto.getNome().getId().equals(2L)) { // IMPRESA ESISTENTE 
+
+            if (progetto.getStato().getId().equals("FA")) {
+                // RIMUOVE MODELLO 4 5 7
+                res.remove(this.em.find(TipoDoc.class,
+                        Long.valueOf("6")));
+                res.remove(this.em.find(TipoDoc.class,
+                        Long.valueOf("7")));
+                res.remove(this.em.find(TipoDoc.class,
+                        Long.valueOf("8")));
+
+                // AGGIUNGO REGISTRO AULA PDF
+                res.add(this.em.find(TipoDoc.class,
+                        Long.valueOf("23")));
+            }
+
         }
 
         return res;
@@ -612,13 +621,22 @@ public class Entity {
                 .setParameter("stato", progetto.getStato());
 
         List<TipoDoc> res = !q.getResultList().isEmpty() ? (List<TipoDoc>) q.getResultList() : new ArrayList();
-        if (progetto.getNome().getId().equals(2L)) { // IMPRESA ESISTENTE - RIMUOVE MODELLO 4 5 7
-            res.remove(this.em.find(TipoDoc.class,
-                    Long.valueOf("6")));
-            res.remove(this.em.find(TipoDoc.class,
-                    Long.valueOf("7")));
-            res.remove(this.em.find(TipoDoc.class,
-                    Long.valueOf("8")));
+        if (progetto.getNome().getId().equals(2L)) { // IMPRESA ESISTENTE 
+
+            if (progetto.getStato().getId().equals("FA")) {
+                // RIMUOVE MODELLO 4 5 7
+                res.remove(this.em.find(TipoDoc.class,
+                        Long.valueOf("6")));
+                res.remove(this.em.find(TipoDoc.class,
+                        Long.valueOf("7")));
+                res.remove(this.em.find(TipoDoc.class,
+                        Long.valueOf("8")));
+
+                // AGGIUNGO REGISTRO AULA PDF
+                res.add(this.em.find(TipoDoc.class,
+                        Long.valueOf("23")));
+            }
+
         }
 
         return res;
@@ -674,10 +692,30 @@ public class Entity {
         return !q.getResultList().isEmpty() ? (StatiPrg) q.getSingleResult() : null;
     }
 
-    public List<TipoDoc_Allievi> getTipoDocAllievi(StatiPrg stato) {
+    public List<TipoDoc_Allievi> getTipoDocAllieviSTART(StatiPrg s) {
         TypedQuery q = this.em.createNamedQuery("tipo_doc_a.byStato", TipoDoc_Allievi.class)
-                .setParameter("stato", stato);
+                .setParameter("stato", s);
         return !q.getResultList().isEmpty() ? (List<TipoDoc_Allievi>) q.getResultList() : new ArrayList();
+    }
+
+    public List<TipoDoc_Allievi> getTipoDocAllievi(ProgettiFormativi progetto) {
+        TypedQuery q = this.em.createNamedQuery("tipo_doc_a.byStato", TipoDoc_Allievi.class)
+                .setParameter("stato", progetto.getStato());
+
+        List<TipoDoc_Allievi> res = !q.getResultList().isEmpty() ? (List<TipoDoc_Allievi>) q.getResultList() : new ArrayList();
+
+        if (progetto.getNome().getId().equals(2L)) { // IMPRESA ESISTENTE 
+            if (progetto.getStato().getId().equals("FA")) {
+                //ADD DOCUMENTI FASE B
+                res.add(this.em.find(TipoDoc_Allievi.class, Long.valueOf("6")));
+                res.add(this.em.find(TipoDoc_Allievi.class, Long.valueOf("7")));
+                res.add(this.em.find(TipoDoc_Allievi.class, Long.valueOf("8")));
+                res.add(this.em.find(TipoDoc_Allievi.class, Long.valueOf("10")));
+            }
+        }
+
+        return res;
+
     }
 
     public List<Documenti_Allievi> getDocAllievo(Allievi a) {
@@ -702,10 +740,23 @@ public class Entity {
         return result;
     }
 
-    public List<TipoDoc_Allievi> getTipoDocAllieviObbl(StatiPrg stato) {
+    public List<TipoDoc_Allievi> getTipoDocAllieviObbl(ProgettiFormativi progetto) {
         TypedQuery q = this.em.createNamedQuery("tipo_doc_a.byStatoObbligatori", TipoDoc_Allievi.class)
-                .setParameter("stato", stato);
-        return !q.getResultList().isEmpty() ? (List<TipoDoc_Allievi>) q.getResultList() : new ArrayList();
+                .setParameter("stato", progetto.getStato());
+
+        List<TipoDoc_Allievi> res = !q.getResultList().isEmpty() ? (List<TipoDoc_Allievi>) q.getResultList() : new ArrayList();
+
+                if (progetto.getNome().getId().equals(2L)) { // IMPRESA ESISTENTE 
+            if (progetto.getStato().getId().equals("FA")) {
+                //ADD DOCUMENTI FASE B
+                res.add(this.em.find(TipoDoc_Allievi.class, Long.valueOf("6")));
+                res.add(this.em.find(TipoDoc_Allievi.class, Long.valueOf("7")));
+                res.add(this.em.find(TipoDoc_Allievi.class, Long.valueOf("8")));
+                res.add(this.em.find(TipoDoc_Allievi.class, Long.valueOf("10")));
+            }
+        }
+                
+        return res;
     }
 
     public List<DocumentiPrg> getRegistriDay(ProgettiFormativi p, Date d) {

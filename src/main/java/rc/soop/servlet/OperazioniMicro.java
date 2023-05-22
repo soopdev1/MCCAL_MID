@@ -236,7 +236,8 @@ public class OperazioniMicro extends HttpServlet {
             if (check) {
 
                 if (p.getStato().getId().equals("FB1")) {//check registri songoli e aula
-                    if (!checkValidateRegisterAllievo(e.getRegistriAllievi(e.getAllieviProgettiFormativi(p))) || !checkValidateRegister(e.getregisterPrg(p))) {
+                    if (!checkValidateRegisterAllievo(e.getRegistriAllievi(e.getAllieviProgettiFormativi(p)))
+                            || !checkValidateRegister(e.getregisterPrg(p))) {
                         check = false;
                         resp.addProperty("message", "Ci sono ancora registri allievi o d'aula da controllare, il progetto non può essere validato.");
                     } else {
@@ -244,7 +245,12 @@ public class OperazioniMicro extends HttpServlet {
                     }
                 } else {
                     if (p.getStato().getId().equals("FA1") && p.getNome().getId().equals(2L)) { //FINE FASE A PER IMPRESE ESISTENTI CONCLUDE PROGETTO
-                        p.setStato(e.getEm().find(StatiPrg.class, "C"));
+                        if (!checkValidateRegister(e.getregisterPrg(p))) {
+                            check = false;
+                            resp.addProperty("message", "Ci sono ancora registri allievi o d'aula da controllare, il progetto non può essere validato.");
+                        } else {
+                            p.setStato(e.getEm().find(StatiPrg.class, "C"));
+                        }                        
                     } else {
                         p.setStato(e.getStatiByOrdineProcesso(p.getStato().getOrdine_processo() + 1));//STATO fase successiva
                     }

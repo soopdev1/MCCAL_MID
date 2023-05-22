@@ -32,16 +32,11 @@
         } else {
             String src = session.getAttribute("src").toString();
             Entity e = new Entity();
-            String guida_SA = e.getPath("guida_SA");
             int max_ore_day = Integer.parseInt(e.getPath("max_ore_day"));
             Allievi a = e.getEm().find(Allievi.class, Long.parseLong(request.getParameter("id")));
-            List<TipoDoc_Allievi> tipo_doc_obbl = e.getTipoDocAllievi(a.getProgetto().getStato());
+            List<TipoDoc_Allievi> tipo_doc_obbl = e.getTipoDocAllievi(a.getProgetto());
             List<Documenti_Allievi> docs = e.getDocAllievo(a);
-//            List<Documenti_Allievi> registri = docs.stream()
-//                    .filter(d -> d.getGiorno() != null && Action.isModifiable(d.getTipo().getModifiche_stati(), a.getProgetto().getStato().getId()))
-//                    .collect(Collectors.toList());//prendo solo i registri
             List<Documenti_Allievi> registri = new ArrayList<>();
-
             for (Documenti_Allievi d : docs) {
                 if (d.getGiorno() != null && Action.isModifiable(d.getTipo().getModifiche_stati(), a.getProgetto().getStato().getId())) {//prendo solo i registri
                     registri.add(d);
