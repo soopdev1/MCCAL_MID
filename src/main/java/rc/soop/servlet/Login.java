@@ -277,7 +277,7 @@ public class Login extends HttpServlet {
                             .replace("@email_am", e.getPath("emailamministrativo"))
                             .replace("@password", pwd), email_txt.getOggetto());
                     resp.addProperty("result", true);
-                } catch (MailjetException ex) {
+                } catch (Exception ex) {
                     e.insertTracking(null, "forgotPwd Errore Invio Mail: " + Utility.estraiEccezione(ex));
                     resp.addProperty("result", false);
                     resp.addProperty("messagge", "Non è stato possibile inviare la mail, contattare l'assistenza per il reset password.");
