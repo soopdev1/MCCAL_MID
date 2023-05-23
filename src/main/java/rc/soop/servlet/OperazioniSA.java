@@ -367,7 +367,7 @@ public class OperazioniSA extends HttpServlet {
                     a.setPivaimpresa(null);
                     a.setAtecoimpresa(null);
                     a.setSedeimpresa(null);
-                    a.setCondizione_mercato((Condizione_Mercato) e.getEm().find(Condizione_Mercato.class, request.getParameter("condizione")));                
+                    a.setCondizione_mercato((Condizione_Mercato) e.getEm().find(Condizione_Mercato.class, request.getParameter("condizione")));
                 }
 
                 e.merge(a);
@@ -713,7 +713,9 @@ public class OperazioniSA extends HttpServlet {
                 e.persist(doc);
             }
             //se caricato tutti i doc obbligatori setto il progetto come idoneo per la prossima fase
-            if (prg.getStato().getId().equals("FB")) {
+            if (prg.getStato().getId().equals("FB")
+                    || (prg.getStato().getId().equals("FA")
+                    && prg.getNome().getId().equals(2L))) {
                 List<TipoDoc_Allievi> tipo_obb_all = e.getTipoDocAllieviObbl(prg);
                 List<TipoDoc_Allievi> doc_allievo;
                 StringBuilder msg = new StringBuilder();
@@ -721,8 +723,8 @@ public class OperazioniSA extends HttpServlet {
                 boolean checkdocs = true, checkregistri = true;
                 msg.append("Sono stati caricati tutti i documenti necessari per questa fase. Ora il progetto può essere inviato al Microcredito per essere controllato.<br>");
                 warning.append("Tuttavia, i seguenti allievi non hanno effettuato le ore necessarie per la Fase B:<br>");
-
-                for (Allievi allievo : prg.getAllievi().stream().filter(all -> all.getStatopartecipazione().getId().equals("01")).collect(Collectors.toList())) {//solo allievi regolarmente iscritti
+                for (Allievi allievo : prg.getAllievi().stream().filter(all
+                        -> all.getStatopartecipazione().getId().equals("01")).collect(Collectors.toList())) {//solo allievi regolarmente iscritti
                     doc_allievo = new ArrayList<>();
                     doc_allievo.addAll(tipo_obb_all);
                     double totale = 0;

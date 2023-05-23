@@ -5,6 +5,8 @@ import static rc.soop.util.MakeTarGz.createTarArchive;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import static rc.soop.util.SendMailJet.sendMail;
+import static rc.soop.util.Utility.titlepro;
 
 /**
  *
@@ -13,15 +15,19 @@ import java.util.List;
 public class NewClass {
 
     public static void main(String[] args) {
+//        String[] dest = {"raffaele.cosco@smartoop.it","mariarosaria.febbraro@microcredito.gov.it"};
+//        sendMail(titlepro, dest, "testo contenuto come prova nuovo mittente", "nuovo oggetto mittente");
         
-        Entity e = new Entity();
-        ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, 122L);
-        e.close();
-
-        List<ProgettiFormativi> prgs = new ArrayList<>();
-        prgs.add(p);
-
-        ByteArrayOutputStream out = createTarArchive(prgs);
+        
+        
+//        Entity e = new Entity();
+//        ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, 122L);
+//        e.close();
+//
+//        List<ProgettiFormativi> prgs = new ArrayList<>();
+//        prgs.add(p);
+//
+//        ByteArrayOutputStream out = createTarArchive(prgs);
         
 ////        compileTabella1(56L);
 //        Database db1 = new Database();

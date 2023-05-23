@@ -40,6 +40,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.UUID;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -53,15 +54,15 @@ import org.json.JSONObject;
  */
 public class SendMailJet {
 
-    public static boolean sendMail(String name, String[] to, String txt, String subject) throws MailjetException {
+    public static boolean sendMail(String name, String[] to, String txt, String subject) {
         return sendMail(name, to, null, txt, subject, null);
     }
 
-    public static boolean sendMail(String name, String[] to, String[] bcc, String txt, String subject) throws MailjetException {
+    public static boolean sendMail(String name, String[] to, String[] bcc, String txt, String subject) {
         return sendMail(name, to, bcc, txt, subject, null);
     }
 
-    public static boolean sendMail(String name, String[] to, String[] bcc, String txt, String subject, File file) throws MailjetException {
+    public static boolean sendMail(String name, String[] to, String[] bcc, String txt, String subject, File file) {
         MailjetClient client;
         MailjetRequest request;
         MailjetResponse response;
@@ -120,7 +121,12 @@ public class SendMailJet {
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(mail));
 
-        response = client.post(request);
+        try {
+            response = client.post(request);
+        } catch (Exception ex) {
+            Utility.log.severe(Utility.estraiEccezione(ex));
+            return false;
+        }
         boolean ok = response.getStatus() == 200;
         if (!ok) {
             Utility.log.log(Level.SEVERE, "ERRORE: sendMail - {0} -- {1} --- {2}", new Object[]{response.getStatus(), response.getRawResponseContent(), response.getData().toList()});
@@ -347,11 +353,11 @@ public class SendMailJet {
                     break;
                 case "C": {
                     if (p.getNome().getId().equals(2L)) { // IMPRESA ESISTENTE - PASSA IN CHIUSO DIRETTAMENTE DALLA FASE A
-                        testostart = "Si informa che l'Ufficio Yes I Start Up Calabria ha provveduto a modificare lo stato del progetto formativo CIP " 
+                        testostart = "Si informa che l'Ufficio Yes I Start Up Calabria ha provveduto a modificare lo stato del progetto formativo CIP "
                                 + p.getCip()
                                 + " da FASE A a CHIUSO. Si invita a voler procedere con il caricamento della documentazione del corso.";
                     } else {
-                        testostart = "Si informa che l'Ufficio Yes I Start Up Calabria ha provveduto a modificare lo stato del progetto formativo CIP " 
+                        testostart = "Si informa che l'Ufficio Yes I Start Up Calabria ha provveduto a modificare lo stato del progetto formativo CIP "
                                 + p.getCip()
                                 + " da FASE B a CHIUSO. Si invita a voler procedere con il caricamento della documentazione del corso.";
                     }
