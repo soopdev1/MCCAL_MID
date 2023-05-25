@@ -140,8 +140,6 @@ public class SendMailJet {
         MailjetRequest request;
         MailjetResponse response;
 
-        String mailjet_name = "yisucal.supporto@microcredito.gov.it";
-
         ClientOptions options = ClientOptions.builder()
                 .apiKey(mailjet_api)
                 .apiSecretKey(mailjet_secret)
@@ -167,7 +165,7 @@ public class SendMailJet {
         }
 
         JSONObject mail = new JSONObject().put(FROM, new JSONObject()
-                .put("Email", mailjet_name)
+                .put("Email", conf.getString("mj.user"))
                 .put("Name", name))
                 .put(TO, dest)
                 .put(CC, ccj)

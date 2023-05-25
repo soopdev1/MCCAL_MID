@@ -751,7 +751,6 @@ public class Entity {
                 res.add(this.em.find(TipoDoc_Allievi.class, Long.valueOf("6")));
                 res.add(this.em.find(TipoDoc_Allievi.class, Long.valueOf("7")));
                 res.add(this.em.find(TipoDoc_Allievi.class, Long.valueOf("8")));
-                res.add(this.em.find(TipoDoc_Allievi.class, Long.valueOf("10")));
             }
         }
 
