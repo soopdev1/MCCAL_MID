@@ -565,6 +565,8 @@ public class OperazioniMicro extends HttpServlet {
             f.setM2(ctrlCheckbox(request.getParameter("check_m2")));
             f.setM9(ctrlCheckbox(request.getParameter("check_m9_2")));
             cl2.setFascicolo(f);
+                        
+            
             VerificheAllievo ver;
             List<VerificheAllievo> list_al = new ArrayList();
             for (String s : request.getParameterValues("allievi[]")) {

@@ -39,6 +39,9 @@
                     allievi.add(a);
                 }
             }
+            boolean impreseesistenti = p.getNome().getId() == 2L;
+
+            String etichettaFA = impreseesistenti ? "FASE A (UNICA FASE)" : "FASE A";
 
             double percentage = allievi.size() == 0 ? 0 : Math.round(allievi.size() * 100 / p.getAllievi().size());
             double percentage2 = percentage >= 80 ? 100 : Math.round(percentage / 80 * 100);
@@ -107,7 +110,6 @@
                                     <form class="kt-form" id="kt_form" action="<%=request.getContextPath()%>/OperazioniMicro?type=compileCL2" style="padding-top: 0;"  accept-charset="ISO-8859-1"  method="post" enctype="multipart/form-data">
                                         <input type="hidden" name="idprogetto" value="<%=p.getId()%>">
                                         <div class="row">
-
                                             <div class="col-lg-5">
                                                 <div class="row col" style="color: #464457;">
                                                     <h5>Anagrafica percorso</h5>
@@ -148,7 +150,11 @@
                                                 </div>
                                                 <label>Percentuale di performance 1% di allievi che termina il percorso  <b class="kt-font-io"><%=percentage%>%</b> &nbsp; <b class="kt-font-danger"><%=percentage2%>%</b></label>
                                                 <div class="form-group kt-align-left row customcheck">
-                                                    <div class="col-10 kt-align-left"><b>Verifica validità corso</b><br>Il numero minimo di allievi previsto dall'avviso ha frequentato la FASE A per un numero di ore pari o superiore a 36?</div>
+                                                    <%if (impreseesistenti) {%>
+                                                    <div class="col-10 kt-align-left"><b>Verifica validità corso</b><br>Il numero minimo dei partecipanti previsto dall'avviso ha frequentato la FASE A per un numero di ore pari o superiore a 36?</div>
+                                                        <%} else {%>
+                                                    <div class="col-10 kt-align-left"><b>Verifica validità corso</b><br>Il numero minimo dei partecipanti previsto dall'avviso ha frequentato la FASE A (UNICA FASE) per un numero di ore pari o superiore a 24? </div>
+                                                        <%}%>
                                                     <div class="col-2 kt-align-right"><span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
                                                             <label>
                                                                 <input type="checkbox" name="check_valid" id="check_valid" checked>
@@ -259,7 +265,8 @@
                                                             </label>
                                                         </span>
                                                     </div>
-                                                    <div class="col-10 kt-align-left">Modello 6 (comunicazione di avvio e calendari FASE A): è stato trasmesso prima dell'avvio della FASE A?</div>
+
+                                                    <div class="col-10 kt-align-left">Modello 6 - comunicazione di avvio e calendari <%=etichettaFA%>: è stato trasmesso prima dell'avvio della FASE A?</div>
                                                 </div>
                                                 <div class="form-group row customcheck">
                                                     <div class="col-2 kt-align-right"><span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
@@ -269,8 +276,11 @@
                                                             </label>
                                                         </span>
                                                     </div>
-                                                    <div class="col-10 kt-align-left">Modello 6 (comunicazione di avvio e calendari FASE A): sono presenti tutti gli allegati obbligatori?</div>
+                                                    <div class="col-10 kt-align-left">Modello 6 - comunicazione di avvio e calendari <%=etichettaFA%>: sono presenti tutti gli allegati obbligatori?</div>
                                                 </div>
+                                                
+                                                
+                                                <%if(!impreseesistenti){%>
                                                 <div class="form-group row customcheck">
                                                     <div class="col-2 kt-align-right"><span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
                                                             <label>
@@ -291,6 +301,7 @@
                                                     </div>
                                                     <div class="col-10 kt-align-left">Modello 7 (comunicazione calendari FASE B): sono presenti tutti gli allegati obbligatori?</div>
                                                 </div>
+                                                <%}%>
                                                 <div class="form-group row customcheck">
                                                     <div class="col-2 kt-align-right"><span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
                                                             <label>
@@ -415,7 +426,7 @@
                             closeSwal();
                             if (json.result) {
                                 var message = json.message !== null ? "<h4>" + json.message + "</h4>" : "";
-                                console.log(json);
+//                                console.log(json);
 //                                if (true) {
                                 message += "<a href='<%=request.getContextPath()%>/OperazioniGeneral?type=downloadDoc&path=" + json.filedl + "' ><u><b>Clicca qui se il download non è iniziato.</b></u></a> ";//<i class='fa fa-cloud-download-alt'></i>
                                 swalSuccessReload2("Checklist 2", message);

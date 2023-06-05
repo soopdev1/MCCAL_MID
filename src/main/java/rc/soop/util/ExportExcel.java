@@ -126,13 +126,11 @@ public class ExportExcel {
 
     public static File compileCL2(Check2 check) {
         ProgettiFormativi p = check.getProgetto();
-
+        boolean impreseesistenti = p.getNome().getId() == 2L;
         Entity e = new Entity();
         e.begin();
-
-        File template = new File(e.getPath("templace_c2"));
+        File template = impreseesistenti ? new File(e.getPath("template_checklist2_esistenti")) : new File(e.getPath("template_checklist2_nuove"));
         String output_name = e.getPath("pathDocSA_Prg").replace("@rssa", p.getSoggetto().getId().toString()).replace("@folder", p.getId().toString()) + "cl2_" + p.getCip() + ".xlsx";
-
         try {
             File out_file = new File(output_name);
             FileInputStream inputStream = new FileInputStream(template);
@@ -196,10 +194,13 @@ public class ExportExcel {
                 column++;
                 writeCell(row, column, check.getFascicolo().getAllegati_fa());
                 column++;
-                writeCell(row, column, check.getFascicolo().getFb());
-                column++;
-                writeCell(row, column, check.getFascicolo().getAllegati_fb());
-                column++;
+
+                if (!impreseesistenti) {
+                    writeCell(row, column, check.getFascicolo().getFb());
+                    column++;
+                    writeCell(row, column, check.getFascicolo().getAllegati_fb());
+                    column++;
+                }
                 writeCell(row, column, check.getFascicolo().getM9());
                 column = 1;
                 row = sheet.getRow(32);
@@ -215,6 +216,7 @@ public class ExportExcel {
             if (!p.getDocumenti().stream().filter(d -> d.getTipo().getId() == 28).findFirst().isPresent()) {
                 e.persist(new DocumentiPrg(output_name, e.getEm().find(TipoDoc.class, 28L), p));
             }
+            
             e.commit();
 
             return out_file;
@@ -304,9 +306,9 @@ public class ExportExcel {
                     writeCell(row, calcoladurata(ore_b));
 
                     writeCell(row, String.valueOf(ore_tot_int));
-                    
+
                     writeCell(row, a.getSelfiemployement() == null ? "" : a.getSelfiemployement().getDescrizione());
-                    
+
                     writeCell(row, a.getStatopartecipazione().getId());
                     writeCell(row, a.getId().toString());
                     writeCell(row, a.getEsito().equals("Fase B") ? "A+B" : "A");
