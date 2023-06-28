@@ -44,7 +44,7 @@ public class Database {
 
         String user = conf.getString("db.user");
         String password = conf.getString("db.pass");
-        String host = conf.getString("db.host") + ":3306/gest_mid";
+        String host = conf.getString("db.host") + ":3306/" + conf.getString("db.name");
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
@@ -410,7 +410,7 @@ public class Database {
     public boolean creastanze_faseB(int idpr) {
         try {
             for (int i = 2; i < 5; i++) {
-                String ins = "INSERT INTO fad_multi (nomestanza,idprogetti_formativi,numerocorso) VALUES ('FAD_" + idpr + "_" + i + "'," + idpr + ",'" + i + "')";
+                String ins = "INSERT INTO fad_multi (nomestanza,idprogetti_formativi,numerocorso) VALUES ('FAD_M_" + idpr + "_" + i + "'," + idpr + ",'" + i + "')";
                 try ( Statement st = this.c.createStatement();) {
                     try {
                         st.executeUpdate(ins);
