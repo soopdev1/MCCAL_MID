@@ -821,9 +821,16 @@ public class OperazioniSA extends HttpServlet {
                 p.setSede(e.getEm().find(SediFormazione.class,
                         Long.valueOf(request.getParameter("sede"))));
             }
+            
+            String divall = "allievino";
+            if (p.getNome().getId() == 2L) {
+                divall = "allievisi";
+            }
+            
+            
             if (p.getStato().getModifiche().getAllievi() == 1) {
                 List<Allievi> allievi_old = e.getAllieviProgettiFormativi(p);
-                for (String s : request.getParameterValues("allievi[]")) {
+                for (String s : request.getParameterValues(divall+"[]")) {
                     Allievi a = e.getEm().find(Allievi.class,
                             Long.valueOf(s));
                     a.setCanaleconoscenza(request.getParameter("knowledge_" + s + "_input"));

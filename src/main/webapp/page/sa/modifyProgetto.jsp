@@ -34,7 +34,9 @@
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             int n_allievi = Integer.parseInt(e.getPath("min_allievi"));
             int max_allievi = Integer.parseInt(e.getPath("max_alunni"));
+            String divall = "allievino";
             if (p.getNome().getId() == 2L) {
+                divall = "allievisi";
                 max_allievi = Integer.parseInt(e.getPath("max_alunni_esistenti"));
                 n_allievi = Integer.parseInt(e.getPath("min_allievi_esistenti"));
             }
@@ -145,8 +147,8 @@
                                         <div class="form-group row col">
                                             <div class="col-6">
                                                 <label>Allievi</label><%=p.getStato().getModifiche().getAllievi() == 1 ? "<label class='kt-font-danger kt-font-boldest'>*</label>" : ""%>
-                                                <div class="select-div" id="allievi_div">
-                                                    <select class="form-control kt-select2 obbligatory" id="allievi" name="allievi[]" multiple="multiple" style="width: 100%" <%=p.getStato().getModifiche().getAllievi() == 1 ? "" : "disabled"%>>
+                                                <div class="select-div" id="<%=divall%>_div">
+                                                    <select class="form-control kt-select2 obbligatory" id="<%=divall%>" name="<%=divall%>[]" multiple="multiple" style="width: 100%" <%=p.getStato().getModifiche().getAllievi() == 1 ? "" : "disabled"%>>
                                                         <%for (Allievi a : alunni_prg) {%>
                                                         <option selected value="<%=a.getId()%>"><%=a.getCognome()%> <%=a.getNome()%></option>
                                                         <%}%>
@@ -260,21 +262,21 @@
                         "Ott",
                         "Nov",
                         "Dic"
-                    ],
+                    ]
                 }
             });
 
 
 
             jQuery(document).ready(function () {
-            <%=p.getStato().getModifiche().getAllievi() == 1 ? "conoscenzeAllevi();" : ""%>
+            <%=p.getStato().getModifiche().getAllievi() == 1 ? "conoscenzeAllevi('"+divall+"');" : ""%>
             });
 
             function ctrlForm() {
                 var err = checkObblFields();
-                if ($('#allievi').val().length < min_allievi || $('#allievi').val().length > max_allievi) {//chek num max e min allievi
+                if ($('#<%=divall%>').val().length < min_allievi || $('#<%=divall%>').val().length > max_allievi) {//chek num max e min allievi
                     err = true;
-                    $('#allievi_div').removeClass("is-valid-select").addClass("is-invalid-select");
+                    $('#<%=divall%>_div').removeClass("is-valid-select").addClass("is-invalid-select");
                     fastSwalShow("<h3>Numero di allievi errato</h3>", "wobble");
                 }
                 return err;
