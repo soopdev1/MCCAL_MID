@@ -745,8 +745,14 @@ public class Entity {
         List<TipoDoc_Allievi> res = !q.getResultList().isEmpty() ? (List<TipoDoc_Allievi>) q.getResultList() : new ArrayList();
 
         if (progetto.getNome().getId().equals(2L)) { // IMPRESA ESISTENTE 
-            if (progetto.getStato().getId().equals("FA") || progetto.getStato().getId().equals("FAE") || progetto.getStato().getId().equals("FA1")
-                    || progetto.getStato().getId().equals("FB") || progetto.getStato().getId().equals("FBE") || progetto.getStato().getId().equals("FB1")) {
+            if (progetto.getStato().getId().equals("FA") 
+                    || progetto.getStato().getId().equals("FAE") 
+                    || progetto.getStato().getId().equals("FA1")
+                    || progetto.getStato().getId().equals("FB") 
+                    || progetto.getStato().getId().equals("FBE") 
+                    || progetto.getStato().getId().equals("FB1")
+                    ) 
+            {
                 //ADD DOCUMENTI FASE B
                 res.add(this.em.find(TipoDoc_Allievi.class, Long.valueOf("6")));
                 res.add(this.em.find(TipoDoc_Allievi.class, Long.valueOf("7")));

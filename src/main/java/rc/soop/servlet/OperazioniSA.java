@@ -740,6 +740,7 @@ public class OperazioniSA extends HttpServlet {
                         }
                         doc_allievo.remove(doc.getTipo());
                     }
+
                     if (!doc_allievo.isEmpty()) {
                         checkdocs = false;
                     }

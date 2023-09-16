@@ -361,7 +361,7 @@ function uploadSE(idallievo, id_tipoDoc, estensione, mime_type) {
         },
         onOpen: function () {
             $('#doc').change(function (e) {
-                if (e.target.files.length != 0) {
+                if (e.target.files.length !== 0) {
                     //$('#label_file').html(e.target.files[0].name);
                     if (e.target.files[0].name.length > 30) {
                         $('#label_file').html(e.target.files[0].name.substring(0, 30) + "...");
@@ -374,7 +374,7 @@ function uploadSE(idallievo, id_tipoDoc, estensione, mime_type) {
             });
             $('#prestiti').select2({
                 dropdownCssClass: "select2-on-top",
-                minimumResultsForSearch: -1,
+                minimumResultsForSearch: -1
             });
             $.get(context + "/QuerySA?type=getSE_Prestiti", function (resp) {
                 var json = JSON.parse(resp);
