@@ -115,7 +115,8 @@ var KTDatatablesDataSourceAjaxServer = function () {
 
                             option += '<a class="dropdown-item fancyBoxAntoRef" href="fad_calendar.jsp?id=' + row.id + '"><i class="fa fa-calendar"></i> Calendario FAD</a>';
                             for (var x1 = 0; x1 < row.fadroom.length; x1++) {
-                                var formnuovo = '<form target="_blank" id="frfad_' + row.fadroom[x1].nomestanza + '" method="post" action="' + row.fadlink + '">' +
+                                var formnuovo = '<form target="_blank" id="frfad_' + row.fadroom[x1].nomestanza 
+                                        + '" method="post" action="' + row.fadlink + '">' +
                                         '<input type="hidden" name="type" value="login_fad_mc_multi"/> ' +
                                         '<input type="hidden" name="roomname" value="' + row.fadroom[x1].nomestanza + '"/> ' +
                                         '<input type="hidden" name="corso" value="' + row.fadroom[x1].numerocorso + '"/> ' +
@@ -485,7 +486,7 @@ function swalDocumentAllievo(idallievo) {
 function showRegistro(idregistro, controllare) {
     var registro = registri.get(idregistro);
     var doc_registro = "";
-    var totalhh = calculateHoursRegistro(registro.orariostart_mattina, registro.orarioend_mattina, registro.orariostart_pom, registro.orarioend_po);
+    var totalhh = calculateHoursRegistro(registro.orariostart_mattina, registro.orarioend_mattina, registro.orariostart_pom, registro.orarioend_pom);
     totalhh = totalhh.indexOf(":") === 1 ? "0" + totalhh : totalhh;
     if (totalhh.endsWith(':0')) {
         totalhh += "0";
